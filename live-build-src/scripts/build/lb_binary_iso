@@ -57,7 +57,7 @@ Check_package chroot/usr/bin/genisoimage genisoimage
 
 if [ "${LB_BINARY_IMAGES}" = "iso-hybrid" ]
 then
-	Check_package chroot/usr/bin/isohybrid syslinux
+	Check_package chroot/usr/bin/isohybrid syslinux-utils
 fi
 
 # Restoring cache

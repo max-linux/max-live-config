@@ -1,10 +1,33 @@
 #!/bin/bash
 
+# $ ls -ltr .build/
+# total 0
+# -rw-r--r-- 1 root root 0 nov  1 20:22 bootstrap
+# -rw-r--r-- 1 root root 0 nov  1 20:22 bootstrap_cache.save
+# -rw-r--r-- 1 root root 0 nov  1 20:23 chroot_linux-image
+# -rw-r--r-- 1 root root 0 nov  1 20:23 chroot_package-lists.install
+# -rw-r--r-- 1 root root 0 nov  1 20:34 chroot_install-packages.install
+# -rw-r--r-- 1 root root 0 nov  1 20:34 chroot_package-lists.live
+# -rw-r--r-- 1 root root 0 nov  1 20:34 chroot_install-packages.live
+# -rw-r--r-- 1 root root 0 nov  1 20:35 chroot_live-packages
+# -rw-r--r-- 1 root root 0 nov  1 20:35 chroot_hacks
+# -rw-r--r-- 1 root root 0 nov  1 20:35 binary_chroot
+# -rw-r--r-- 1 root root 0 nov  1 20:37 binary_rootfs
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_manifest
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_linux-image
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_syslinux
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_disk
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_hooks
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_checksums
+# -rw-r--r-- 1 root root 0 nov  1 20:38 binary_iso
+
+
 if [ "$1" != "" ]; then
     set -x
     case $1 in
         rebuild)
-            rm -f .build/binary*
+            sudo rm -f .build/binary*
+            sudo lb build
             ;;
 
         purge)

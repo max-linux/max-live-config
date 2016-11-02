@@ -4,3 +4,8 @@
 chroot/
 binary/
 cache/
+
+
+binary.*
+chroot.*
+

@@ -1,5 +1,12 @@
-ubuntu-mate-desktop
+max-desktop-mate
 
+max-live
 ubiquity ubiquity-frontend-gtk ubiquity-slideshow-ubuntu ubiquity-casper
 
 firefox ubufox
+
+
+
+#if ARCHITECTURES amd64
+max-i386-libs
+#endif

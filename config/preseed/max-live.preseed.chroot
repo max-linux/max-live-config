@@ -1,0 +1,9 @@
+
+tzdata tzdata/Areas     select Europe
+tzdata tzdata/Zones/Europe      select Madrid
+
+b43-fwcutter b43-fwcutter/cut_firmware boolean true
+
+ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean true
+ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note
+

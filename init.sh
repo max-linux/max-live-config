@@ -30,6 +30,11 @@ if [ "$1" != "" ]; then
             sudo lb build
             ;;
 
+        cleanbuild)
+            sudo lb clean
+            sudo lb build
+            ;;
+
         purge)
             sudo lb clean --purge
             ;;
@@ -50,7 +55,7 @@ lb config --mode ubuntu \
           --archive-areas "main universe multiverse" \
           --parent-archive-areas "main universe multiverse" \
           --apt-recommends false \
-          --apt-http-proxy "http://localhost:3142" \
+          --apt-http-proxy "http://192.168.0.2:3142" \
           \
           --parent-mirror-bootstrap $MIRROR \
           --parent-mirror-chroot-security $MIRROR \
@@ -69,7 +74,7 @@ lb config --mode ubuntu \
           --keyring-packages "ubuntu-keyring" \
           \
           --binary-images iso-hybrid \
-          \ #--binary-images iso \
+          \ # --binary-images iso \
           --syslinux-theme "max90" \
           --win32-loader false \
           \
@@ -81,7 +86,7 @@ lb config --mode ubuntu \
           --initsystem none \
           \
           --iso-application "MAX 9.0" \
-          --iso-preparer 'MAX developers on $(date)' \
+          --iso-preparer 'MAX developers on $(date +"%F_%T")' \
           --iso-publisher "MAdrid_linuX" \
           --iso-volume 'MAX 9.0'
 

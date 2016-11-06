@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#
+# Add i386 if arch is amd64 to install multiarch packages
+#
+#
+
+set -e
+
+
+ARCH="i386"
+if file /sbin/mkfs| grep -q x86-64; then
+  ARCH="amd64"
+fi
+
+if [ "$ARCH" = "amd64" ]
+then
+	echo "MAX: Adding ARCH i386 in amd64..."
+	dpkg --add-architecture i386
+	apt-get --yes update
+fi
+

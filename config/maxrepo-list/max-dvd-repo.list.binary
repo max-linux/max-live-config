@@ -1,0 +1,16 @@
+
+b43-fwcutter build-essential dpkg-dev fakeroot g++ capiutils ipppd
+linux-wlan-ng localechooser-data lupin-support mouseemu
+patch pptp-linux setserial linux-wlan-ng-firmware
+virtualbox-guest-utils virtualbox-guest-x11 virtualbox-guest-dkms
+
+
+
+#max-desktop-infantil-primaria max-infantil
+
+
+#if ARCHITECTURES amd64
+efibootmgr
+grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed
+secureboot-db shim shim-signed
+#endif

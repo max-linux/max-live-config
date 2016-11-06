@@ -1,0 +1,162 @@
+#!/bin/sh
+
+set -e
+
+# Including common functions
+( . "${LIVE_BUILD}/scripts/build.sh" > /dev/null 2>&1 || true ) || . /usr/lib/live/build.sh
+
+
+
+# Reading configuration files
+Read_conffiles config/all config/common config/bootstrap config/chroot config/binary config/source
+Set_defaults
+
+Echo_message "Begin MAX REPO lists..."
+
+# Requiring stage file
+Require_stagefile .build/config .build/bootstrap
+
+# Checking stage file
+Check_stagefile .build/binary_max-repo
+
+
+if ls config/maxrepo-list/*.list > /dev/null 2>&1 || \
+   ls config/maxrepo-list/*.list.binary > /dev/null 2>&1
+then
+	case "${LB_BUILD_WITH_CHROOT}" in
+		true)
+			# Restoring cache
+			Restore_cache cache/packages.chroot
+
+			# Check depends
+			Check_package chroot/usr/bin/apt-ftparchive apt-utils
+			Check_package chroot/usr/bin/grep-aptavail dctrl-tools
+
+			# Installing depends
+			Install_package
+			;;
+
+		false)
+			if [ ! -e /usr/bin/apt-ftparchive ]; then
+				# apt-utils
+				Echo_error "/usr/bin/apt-ftparchive - no such file."
+				exit 1
+			fi
+
+			if [ ! -e /usr/bin/grep-aptavail ]; then
+				# dctrl-tools
+				Echo_error "/usr/bin/grep-aptavail - no such file."
+				exit 1
+			fi
+			;;
+	esac
+
+	if [ -e "${LIVE_BUILD}/share/bin/Packages" ]
+	then
+		cp "${LIVE_BUILD}/share/bin/Packages" chroot/bin
+	else
+		cp /usr/share/live/build/bin/Packages chroot/bin
+	fi
+
+
+
+	mkdir -p chroot/binary.deb/archives/partial
+	cp chroot/var/lib/dpkg/status chroot/var/lib/dpkg/status.tmp
+	
+	# extract dpkg status from squashfs
+	TMP=$(mktemp -d)
+	mount -t squashfs binary/casper/filesystem.squashfs $TMP
+	if [ -e "${TMP}/var/lib/dpkg/status-old" ]
+		then
+		cp "${TMP}/var/lib/dpkg/status-old" "chroot/var/lib/dpkg/status"
+	else
+		cp "${TMP}/var/lib/dpkg/status" "chroot/var/lib/dpkg/status"
+	fi
+	umount "${TMP}"
+	rmdir "${TMP}"
+
+	touch chroot/var/lib/dpkg/status
+
+	rm -rf binary/pool binary/dists
+
+	for LIST in config/maxrepo-list/*.list \
+		    config/maxrepo-list/*.list.binary
+	do
+		if [ -e "${LIST}" ]
+		then
+			# Generate package list
+			Expand_packagelist "${LIST}" "config/maxrepo-list" > chroot/root/"$(basename ${LIST})"
+
+			# Downloading additional packages
+			Chroot chroot "xargs --arg-file=/root/$(basename ${LIST}) apt-get ${APT_OPTIONS} -o Dir::Cache=/binary.deb --download-only install"
+
+			# Remove package list
+			rm chroot/root/"$(basename ${LIST})"
+		fi
+	done
+
+	for FILE in chroot/binary.deb/archives/*.deb
+	do
+		SOURCE="$(dpkg -f ${FILE} Source | awk '{ print $1 }')"
+		
+		if [ -z "${SOURCE}" ]
+		then
+			SOURCE="$(basename ${FILE} | awk -F_ '{ print $1 }')"
+		fi
+
+		case "${SOURCE}" in
+			lib?*)
+				LETTER="$(echo ${SOURCE} | sed 's|\(....\).*|\1|')"
+				;;
+
+			*)
+				LETTER="$(echo ${SOURCE} | sed 's|\(.\).*|\1|')"
+				;;
+		esac
+			
+		SECTION="main"
+
+		# Install directory
+		# mkdir -p binary/pool/${SECTION}/"${LETTER}"/"${SOURCE}"
+		# # Move files
+		# mv "${FILE}" binary/pool/${SECTION}/"${LETTER}"/"${SOURCE}"
+
+		mkdir -p binary/pool/${SECTION}/"${LETTER}"
+		mv "${FILE}" binary/pool/${SECTION}/"${LETTER}"/
+
+	done
+
+	cd binary
+	LB_DVD_REPO_DIST="max"
+
+	for SECTION in pool/*
+	do
+		SECTION="$(basename ${SECTION})"
+
+		mkdir -p dists/${LB_DVD_REPO_DIST}/${SECTION}/binary-${LB_ARCHITECTURES}
+		apt-ftparchive packages pool/${SECTION} > dists/${LB_DVD_REPO_DIST}/${SECTION}/binary-${LB_ARCHITECTURES}/Packages
+		gzip -9 -c dists/${LB_DVD_REPO_DIST}/${SECTION}/binary-${LB_ARCHITECTURES}/Packages > dists/${LB_DVD_REPO_DIST}/${SECTION}/binary-${LB_ARCHITECTURES}/Packages.gz
+	done
+
+	cd "${OLDPWD}"
+
+	rm -f chroot/bin/Packages
+
+	rm -rf chroot/binary.deb
+	mv chroot/var/lib/dpkg/status.tmp chroot/var/lib/dpkg/status
+
+	case "${LB_BUILD_WITH_CHROOT}" in
+		true)
+			# Removing depends
+			Remove_package
+
+			# Saving cache
+			Save_cache cache/packages.chroot
+			;;
+	esac
+
+	Echo_message "Size of MAX mirror $(du -sh binary/pool/| awk '{print $1}')..."
+
+	# Creating stage file
+	Create_stagefile .build/binary_max-repo
+fi

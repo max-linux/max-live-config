@@ -1,0 +1,62 @@
+#!/bin/sh
+
+set -e
+
+# Including common functions
+( . "${LIVE_BUILD}/scripts/build.sh" > /dev/null 2>&1 || true ) || . /usr/lib/live/build.sh
+
+# Setting static variables
+DESCRIPTION="$(Echo 'modify binary files')"
+HELP=""
+USAGE="${PROGRAM} [--force]"
+
+Arguments "${@}"
+
+# Reading configuration files
+Read_conffiles config/all config/common config/bootstrap config/chroot config/binary config/source
+Set_defaults
+
+ARCHITECTURE="$(echo ${LB_ARCHITECTURES} | sed -e 's| |/|g')"
+
+ 
+if [ ! -e binary/casper/vmlinuz ]; then
+	echo "I: Renombrando kernel..."
+	mv binary/casper/vmlinuz-*      binary/casper/vmlinuz
+	mv binary/casper/initrd.img-*   binary/casper/initrd.lz
+	mv binary/.disk/casper-uuid-*   binary/.disk/casper-uuid-generic
+fi
+
+rm -f binary/.disk/casper-uuid-[0-9]*
+
+echo "I: creando max.preseed ..."
+mkdir -p binary/preseed
+cat << EOF >> binary/preseed/max.seed
+tasksel tasksel/first   multiselect string
+ubiquity    ubiquity/keep-installed string os-prober
+debconf locales/locales_to_be_generated multiselect es_ES.UTF-8 UTF-8
+debconf locales/default_environment_locale select es_ES.UTF-8
+debconf tzdata/Areas select Europe
+debconf tzdata/Zones/Europe select Madrid
+d-i clock-setup/utc boolean true
+d-i time/zone string Europe/Madrid
+d-i debian-installer/locale string es_ES.UTF-8
+EOF
+
+
+
+printf "dvd/single" > binary/.disk/cd_type
+touch binary/.disk/base_installable 
+
+echo "MAX 9.0 $ARCHITECTURE $(date +%Y%m%d-%H:%M)" > binary/.disk/info
+
+cat << EOF > binary/README.diskdefines
+#define DISKNAME  MAX 9.0 $ARCHITECTURE $(date +%Y%m%d-%H:%M)
+#define TYPE  binary
+#define TYPEbinary  1
+#define ARCH  $ARCHITECTURE
+#define ARCH$ARCHITECTURE  1
+#define DISKNUM  1
+#define DISKNUM1  1
+#define TOTALNUM  0
+#define TOTALNUM0  1
+EOF

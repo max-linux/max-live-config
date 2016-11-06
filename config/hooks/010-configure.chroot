@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+echo "MAX: Configure chroot ..."
+
+echo "Europe/Madrid" > /etc/timezone
+LC_ALL=C LC_MESSAGES=C DEBCONF_FRONTEND="noninteractive" DEBIAN_FRONTEND="noninteractive" dpkg-reconfigure tzdata
+
+
+cat << EOF > /etc/default/keyboard
+# KEYBOARD CONFIGURATION FILE
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="pc105"
+XKBLAYOUT="es"
+XKBVARIANT=""
+XKBOPTIONS=""
+
+EOF

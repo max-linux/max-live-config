@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+KERNEL=$(ls -1 /boot/vmlinuz-*| tail -1| sed -e 's|/boot/vmlinuz-||g')
+
+echo "MAX: Updating initramfs ($KERNEL) ..."
+
+update-initramfs -u -k all
+

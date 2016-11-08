@@ -1,7 +1,7 @@
-max-desktop-mate
+max-desktop-mate-deps
 
 max-live
-ubiquity ubiquity-frontend-gtk ubiquity-slideshow-ubuntu ubiquity-casper
+ubiquity ubiquity-frontend-gtk ubiquity-slideshow-max ubiquity-casper
 
 firefox ubufox
 

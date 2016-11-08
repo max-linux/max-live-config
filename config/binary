@@ -78,7 +78,7 @@ LB_HDD_SIZE="10000"
 LB_ISO_APPLICATION="MAX 9.0"
 
 # $LB_ISO_PREPARER: set iso preparer
-# (Default: MAX developers on $(date +"%F_%T)")
+# (Default: MAX developers on $(date +"%F_%T"))
 LB_ISO_PREPARER="MAX developers on $(date +"%F_%T")"
 
 # $LB_ISO_PUBLISHER: set iso publisher

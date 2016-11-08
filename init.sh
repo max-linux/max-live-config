@@ -48,6 +48,10 @@ fi
 
 
 MIRROR="http://archive.ubuntu.com/ubuntu"
+MIRROR_BT="http://192.168.0.2:3142/archive.ubuntu.com/ubuntu"
+
+
+
 
 lb config --mode ubuntu \
           --distribution xenial \
@@ -57,14 +61,29 @@ lb config --mode ubuntu \
           --apt-recommends false \
           --apt-http-proxy "http://192.168.0.2:3142" \
           \
-          --parent-mirror-bootstrap $MIRROR \
-          --parent-mirror-chroot-security $MIRROR \
-          --parent-mirror-binary $MIRROR \
-          --parent-mirror-binary-security $MIRROR \
-          --mirror-bootstrap $MIRROR \
+          --mirror-bootstrap $MIRROR_BT \
+          --parent-mirror-bootstrap $MIRROR_BT \
+          \
+          --mirror-chroot $MIRROR \
           --mirror-chroot-security $MIRROR \
+          --mirror-chroot-volatile $MIRROR \
+          --mirror-chroot-backports $MIRROR \
+          \
+          --parent-mirror-chroot $MIRROR \
+          --parent-mirror-chroot-security $MIRROR \
+          --parent-mirror-chroot-volatile $MIRROR \
+          --parent-mirror-chroot-backports $MIRROR \
+          \
           --mirror-binary $MIRROR \
           --mirror-binary-security $MIRROR \
+          --mirror-binary-volatile $MIRROR \
+          --mirror-binary-backports $MIRROR \
+          \
+          --parent-mirror-binary $MIRROR \
+          --parent-mirror-binary-security $MIRROR \
+          --parent-mirror-binary-volatile $MIRROR \
+          --parent-mirror-binary-backports $MIRROR \
+          \
           --source false \
           --apt-source-archives false \
           --debian-installer false \
@@ -74,7 +93,6 @@ lb config --mode ubuntu \
           --keyring-packages "ubuntu-keyring" \
           \
           --binary-images iso-hybrid \
-          \ # --binary-images iso \
           --syslinux-theme "max90" \
           --win32-loader false \
           \
@@ -90,4 +108,5 @@ lb config --mode ubuntu \
           --iso-publisher "MAdrid_linuX" \
           --iso-volume 'MAX 9.0'
 
+# --binary-images iso \
 

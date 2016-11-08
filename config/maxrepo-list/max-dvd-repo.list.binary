@@ -12,5 +12,5 @@ virtualbox-guest-utils virtualbox-guest-x11 virtualbox-guest-dkms
 #if ARCHITECTURES amd64
 efibootmgr
 grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed
-secureboot-db shim shim-signed
+secureboot-db shim shim-signed fwupdate
 #endif

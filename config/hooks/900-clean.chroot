@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "MAX: Clean chroot..."
+
+cat << EOF > /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu/ xenial main universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ xenial-security main universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ xenial-updates main universe multiverse
+
+deb http://max2.educa.madrid.org/max90 max main
+EOF
+
+rm -f /etc/apt/apt.conf.d/00recommends \
+      /etc/apt/apt.conf.d/00http-proxy \
+      /etc/apt/sources.list.d/max90.list
+
+
+apt-get -y update
+

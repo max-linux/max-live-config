@@ -1,0 +1,63 @@
+
+# hardware
+dmidecode
+usbutils
+pciutils
+irqbalance
+hdparm
+lshw
+parted
+
+
+# system
+busybox-static cpio
+cron
+apparmor
+ntfs-3g
+dosfstools
+iptables
+telnet
+openssh-client
+tcpdump
+iputils-tracepath
+friendly-recovery
+ftp
+lsof
+strace
+ltrace
+psmisc
+systemd-sysv
+bash-completion
+command-not-found
+manpages man-db
+mlocate
+nano
+uuid-runtime
+
+# from diff
+command-not-found
+plymouth
+grub-pc
+kpartx
+kpartx-boot
+rename
+secureboot-db
+
+
+# network
+apt-transport-https
+dnsutils
+rsync
+wget
+#ufw
+update-manager-core
+
+# ed
+file mime-support
+info
+language-selector-common
+libpam-systemd
+logrotate
+time
+
+

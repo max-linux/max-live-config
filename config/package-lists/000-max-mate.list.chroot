@@ -1,9 +1,15 @@
 max-desktop-mate-deps
 
+# for LIVE
 max-live
 ubiquity ubiquity-frontend-gtk ubiquity-slideshow-max ubiquity-casper
+gparted
 
-firefox ubufox
+
+
+
+firefox max-ubufox
+
 
 
 

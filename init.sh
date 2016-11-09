@@ -27,20 +27,27 @@ if [ "$1" != "" ]; then
     case $1 in
         rebuild)
             sudo rm -f .build/binary*
-            sudo lb build
+            echo "-----------------------------------------------------" >> build.log
+            echo " BUILD $(date +"%F_%T")" >> build.log
+            sudo lb build | tee -a build.log
             ;;
 
         cleanbuild)
             sudo lb clean
-            sudo lb build
+            echo "-----------------------------------------------------" > build.log
+            echo " BUILD $(date +"%F_%T")" >> build.log
+            sudo lb build | tee -a build.log
             ;;
 
         purge)
             sudo lb clean --purge
+            rm -f build.log
             ;;
 
         build)
-            sudo lb build
+            echo "-----------------------------------------------------" >> build.log
+            echo " BUILD $(date +"%F_%T")" >> build.log
+            sudo lb build | tee -a build.log
             ;;
     esac
     exit
@@ -50,14 +57,11 @@ fi
 MIRROR="http://archive.ubuntu.com/ubuntu"
 MIRROR_BT="http://192.168.0.2:3142/archive.ubuntu.com/ubuntu"
 
-
-
-
 lb config --mode ubuntu \
           --distribution xenial \
           --architectures amd64 \
-          --archive-areas "main universe multiverse" \
-          --parent-archive-areas "main universe multiverse" \
+          --archive-areas "main universe multiverse restricted" \
+          --parent-archive-areas "main universe multiverse restricted" \
           --apt-recommends false \
           --apt-http-proxy "http://192.168.0.2:3142" \
           \
@@ -110,3 +114,4 @@ lb config --mode ubuntu \
 
 # --binary-images iso \
 
+# --binary-images iso \

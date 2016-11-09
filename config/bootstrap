@@ -117,12 +117,12 @@ LB_MIRROR_DEBIAN_INSTALLER="http://archive.ubuntu.com/ubuntu/"
 LB_ARCHIVES=""
 
 # $LB_ARCHIVE_AREAS: select archive areas to use
-# (Default: main universe multiverse)
-LB_ARCHIVE_AREAS="main universe multiverse"
+# (Default: main universe multiverse restricted)
+LB_ARCHIVE_AREAS="main universe multiverse restricted"
 
 # $LB_PARENT_ARCHIVE_AREAS: select archive areas to use
-# (Default: main universe multiverse)
-LB_PARENT_ARCHIVE_AREAS="main universe multiverse"
+# (Default: main universe multiverse restricted)
+LB_PARENT_ARCHIVE_AREAS="main universe multiverse restricted"
 
 # $LB_BOOTSTRAP_QEMU_ARCHITECTURES: architectures to use foreign bootstrap
 # (Default: )

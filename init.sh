@@ -62,7 +62,7 @@ lb config --mode ubuntu \
           --architectures amd64 \
           --archive-areas "main universe multiverse restricted" \
           --parent-archive-areas "main universe multiverse restricted" \
-          --apt-recommends false \
+          --apt-recommends true \
           --apt-http-proxy "http://192.168.0.2:3142" \
           \
           --mirror-bootstrap $MIRROR_BT \

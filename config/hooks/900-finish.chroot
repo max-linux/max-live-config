@@ -8,3 +8,7 @@ echo "MAX: Updating initramfs ($KERNEL) ..."
 
 update-initramfs -u -k all
 
+apt-get -y remove --purge texlive\*
+apt-get -y remove --purge tuxpaint\*
+apt-get -y remove --purge gcompris\*
+apt-get -y autoremove --purge

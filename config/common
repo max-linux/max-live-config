@@ -20,8 +20,8 @@ LB_APT_HTTP_PROXY="http://192.168.0.2:3142"
 LB_APT_PIPELINE=""
 
 # $LB_APT_RECOMMENDS: set apt/aptitude recommends
-# (Default: false)
-LB_APT_RECOMMENDS="false"
+# (Default: true)
+LB_APT_RECOMMENDS="true"
 
 # $LB_APT_SECURE: set apt/aptitude security
 # (Default: true)

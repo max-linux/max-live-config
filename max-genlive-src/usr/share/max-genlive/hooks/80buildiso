@@ -1,0 +1,119 @@
+
+# install syslinux-themes-max90 in chroot and copy to $CDRW/isolinux
+chroot $CHROOT << EOC || _exit "Error instalando syslinux-themes-max90"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+export ERROR=0
+apt-get $APT_OPTS update || ERROR=1
+apt-get $APT_OPTS -f install
+apt-get $APT_OPTS install syslinux-themes-max90 gfxboot-theme-ubuntu || ERROR=1
+apt-get clean
+exit \$ERROR
+EOC
+
+set -x
+rm -f $CDRW/isolinux/*
+cp -L --remove-destination $CHROOT/usr/share/syslinux/themes/max90/isolinux-live/* $CDRW/isolinux/
+
+mkdir -p $CDRW/gfxboot
+tar -zxf $CHROOT/usr/share/gfxboot-theme-ubuntu/bootlogo.tar.gz -C $CDRW/gfxboot
+cp $CDRW/gfxboot/bootlogo $CDRW/gfxboot/es.tr $CDRW/gfxboot/16x16.fnt $CDRW/isolinux/
+rm -rf $CDRW/gfxboot
+set +x
+
+mkdir -p $CDRW/preseed $CDRW/.disk
+
+_echo "Copiando preseed"
+rm -f $CDRW/preseed/*
+cp $GENLIVE/preseed/* $CDRW/preseed/ || _exit "No se puede sobreescribir preseed"
+
+printf "%s - $ARCH (%s)" "$TITLE" "$created" > $CDRW/.disk/info
+printf "http://www.educa2.madrid.org/web/max" > $CDRW/.disk/release_notes_url
+printf "dvd/single" > $CDRW/.disk/cd_type
+if [ -n "$ENABLE_EXTRA" ]; then
+  touch $CDRW/.disk/base_installable 
+else
+  rm -f $CDRW/.disk/base_installable
+fi
+
+zcat $CDRW/casper/initrd.gz | cpio --quiet -id conf/uuid.conf
+cat conf/uuid.conf 2>/dev/null > $CDRW/.disk/casper-uuid-generic
+rm -rf conf/
+
+cat << EOF > $CDRW/README.diskdefines
+#define DISKNAME  $TITLE - Build $ARCH $created
+#define TYPE  binary
+#define TYPEbinary  1
+#define ARCH  $ARCH
+#define ARCH$ARCH  1
+#define DISKNUM  1
+#define DISKNUM1  1
+#define TOTALNUM  0
+#define TOTALNUM0  1
+EOF
+
+#_echo "Borrando wuby (instalador para windows)"
+#rm -rf $CDRW/*exe
+#rm -rf $CDRW/*inf
+#rm -rf $CDRW/pics/
+
+# añadir software portable del paquete max-win32-apps
+if [ -d $GENLIVE/win32aps ]; then
+  _echo "Copiando max-win32-apps ..."
+  cp -ra $GENLIVE/win32aps/* $CDRW/
+fi
+
+
+if [ "$ARCH" = "amd64" ]; then
+  cp -ra /usr/share/max-genlive/EFI     $CDRW/
+  cp -ra /usr/share/max-genlive/boot    $CDRW/
+fi
+
+# copiar memtest
+cp /boot/memtest86+.bin $CDRW/casper/mt86plus
+
+_echo "Generando md5sum de archivos de dentro del DVD..."
+#(cd $CDRW && find . -type f -print0 | grep -v boot.cat | grep -v isolinux.bin | xargs -0 md5sum > md5sum.txt)
+(cd $CDRW && find . -type f -print0 | xargs -0 md5sum > md5sum.txt)
+
+# delete boot.cat and isolinux.bin
+(cd $CDRW && grep -v -e "boot.cat" -e "isolinux.bin" md5sum.txt > md5sum.txt.new)
+(cd $CDRW && mv md5sum.txt.new md5sum.txt)
+
+#(cd debian/python-exe >/dev/null ; find . -type f  ! -regex '.*/DEBIAN/.*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums)
+
+
+ISO_FILE="${IMAGE_NAME}-DVDlive-$ARCH-${stamp}.iso"
+
+_echo "Generando ${ISO_FILE}"
+
+# montar chroot 
+mount -o bind $CHROOT/../ $CHROOT/mnt
+
+if [ "$ARCH" = "amd64" ]; then
+  chroot $CHROOT genisoimage -U -A "$TITLE (${ARCH})" -V "$TITLE (${ARCH})" \
+     -J -joliet-long -r -v -T -cache-inodes -l -b isolinux/isolinux.bin \
+     -volset "$TITLE (${ARCH})" \
+     -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+     -boot-info-table -o /mnt/${ISO_FILE} \
+     -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot \
+     /mnt/cdimage.${ARCH}/ || _exit "Error generando la imagen ISO"
+else
+  chroot $CHROOT genisoimage -r -V "$TITLE (${ARCH})" -cache-inodes -J -l -b isolinux/isolinux.bin \
+     -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+     -boot-info-table -o /mnt/${ISO_FILE} /mnt/cdimage.${ARCH}/ || _exit "Error generando la imagen ISO"
+fi
+
+
+umount $CHROOT/mnt
+
+
+#genisoimage -r -V "$TITLE" -cache-inodes -J -l -b isolinux/isolinux.bin \
+#     -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+#     -boot-info-table -o ${ISO_FILE} $CDRW/ || _exit "Error generando la imagen ISO"
+
+_echo "Generando md5 del DVD"
+md5sum ${ISO_FILE} > ${ISO_FILE}.md5 || _exit "Error generando el md5"

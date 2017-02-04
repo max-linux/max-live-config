@@ -1,0 +1,466 @@
+
+
+# hook para nanomax
+
+if [ "$ENABLE_NANO" = "1" ]; then
+
+  #rm -rf $NANOCHROOT
+  # don't build nanoMaX for amd64, use i386 or nothing
+  if [ ! -d $NANOCHROOT ]; then
+    _echo "debootstrap --arch=$NANOARCH $DISTRO $NANOCHROOT http://$MIRROR/ubuntu"
+    (debootstrap --arch=$NANOARCH $DISTRO $NANOCHROOT http://$MIRROR/ubuntu || _exit "Error en el debootstrap")
+  fi
+
+  # configurar sources.list
+  cat << EOF > $NANOCHROOT/etc/apt/sources.list
+deb http://$MIRROR/ubuntu ${DISTRO} main universe multiverse restricted
+deb http://$MIRROR/ubuntu ${DISTRO}-updates main universe multiverse restricted
+deb http://$MIRROR/ubuntu ${DISTRO}-security main universe multiverse restricted
+
+deb http://$MIRROR/max75 max main
+EOF
+
+  cat << EOF > $NANOCHROOT/etc/apt/apt.conf.d/06norecomends
+APT
+{
+	Install-Recommends "false";
+	Install-Suggests "false";
+};
+EOF
+
+cat << EOF > $NANOCHROOT/etc/hosts
+127.0.0.1       localhost $MAXHOSTNAME
+127.0.1.1       $MAXHOSTNAME
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+EOF
+
+   echo "$MAXHOSTNAME" > $NANOCHROOT/etc/hostname
+   echo "$MAXHOSTNAME" > $NANOCHROOT/etc/mailname
+
+  _echo "Configurando DEBCONF y zona horaria"
+
+  LC_ALL=C LC_MESSAGES=C chroot $NANOCHROOT debconf-set-selections << EOF
+sun-java5-bin   shared/accepted-sun-dlj-v1-1    boolean true
+sun-java5-jdk   shared/accepted-sun-dlj-v1-1    boolean true
+sun-java5-jre   shared/accepted-sun-dlj-v1-1    boolean true
+sun-java6-bin   shared/accepted-sun-dlj-v1-1    boolean true
+sun-java6-jre   shared/accepted-sun-dlj-v1-1    boolean true
+sun-java6-jdk   shared/accepted-sun-dlj-v1-1    boolean true
+tzdata  tzdata/Areas    select  Europe
+tzdata  tzdata/Zones/Europe     select  Madrid
+ttf-mscorefonts-installer	msttcorefonts/accepted-mscorefonts-eula	boolean	true
+ttf-mscorefonts-installer	msttcorefonts/present-mscorefonts-eula	note
+EOF
+
+
+cat << EOF > $NANOCHROOT/etc/default/keyboard
+# Check /usr/share/doc/keyboard-configuration/README.Debian for
+# documentation on what to do after having modified this file.
+
+# The following variables describe your keyboard and can have the same
+# values as the XkbModel, XkbLayout, XkbVariant and XkbOptions options
+# in /etc/X11/xorg.conf.
+
+XKBMODEL="pc105"
+XKBLAYOUT="es"
+XKBVARIANT=""
+XKBOPTIONS=""
+
+# If you don't want to use the XKB layout on the console, you can
+# specify an alternative keymap.  Make sure it will be accessible
+# before /usr is mounted.
+# KMAP=/etc/console-setup/defkeymap.kmap.gz
+EOF
+
+
+  echo "Europe/Madrid" > $NANOCHROOT/etc/timezone
+
+  chroot $NANOCHROOT/ << EOF
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+dpkg-reconfigure tzdata
+EOF
+
+  mount --bind /proc $NANOCHROOT/proc
+  mount --bind /sys  $NANOCHROOT/sys
+
+  _add_invoke $NANOCHROOT
+
+
+  chroot $NANOCHROOT << EOC || _exit "Error instalando max-nanomax"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+apt-get update
+apt-get $APT_OPTS install max-keyring
+yes | dpkg --configure -a
+apt-get $APT_OPTS -f install
+apt-get update
+apt-get $APT_OPTS upgrade
+apt-get $APT_OPTS dist-upgrade
+yes| apt-get $APT_OPTS install xserver-xorg ubiquity casper ubiquity-frontend-max user-setup max-live
+apt-get $APT_OPTS install max-nanomax-deps max-desktop-lxde-deps
+apt-get clean
+apt-get $APT_OPTS autoremove --purge
+EOC
+
+
+EXTRA_DEBS=$(find /var/lib/max-genlive/nanomax -type f -name *all.deb -o -name *$ARCH.deb 2>/dev/null)
+
+if [ "$EXTRA_DEBS" != "" ]; then
+_echo "Instalando paquetes EXTRA"
+
+mkdir -p $NANOCHROOT/pkgs
+/bin/cp $EXTRA_DEBS $NANOCHROOT/pkgs/
+
+chroot $NANOCHROOT << EOC || _exit "No se han podido instalar los paquetes EXTRA"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+export ERROR=0
+export MAX_ERROR=0
+dpkg -i /pkgs/*deb
+apt-get $APT_OPTS -f install
+apt-get clean
+exit \$ERROR
+EOC
+
+rm -rf $NANOCHROOT/pkgs/
+
+fi # end of $EXTRA_DEBS
+
+
+
+
+MOODLE_PRE="echo ' * no maxmoodle'"
+  # delete some not needed packages
+if [ "$NANOMAX_MOODLE" = "1" ]; then
+MOODLE_PKGS="maxmoodle"
+MOODLE_PRE="dpkg-reconfigure maxmoodle; dpkg-reconfigure moodle || true"
+
+if [ ! -d $NANOCHROOT/usr/share/moodle ] && [ ! -d $NANOCHROOT/var/lib/mysql/moodle ]; then
+_echo "Configurando MOODLE en nanoMaX"
+
+chroot $NANOCHROOT << EOC || _exit "No se han podido instalar los paquetes para la versión live"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+export ERROR=0
+apt-get $APT_OPTS install maxmoodle-pressed || ERROR=1
+apt-get $APT_OPTS install maxmoodle max-java-jre || ERROR=1
+apt-get $APT_OPTS install maxmoodle maxmoodle-pressed moodle max-java-jre 
+apt-get $APT_OPTS autoremove --purge
+apt-get $APT_OPTS autoremove --purge
+apt-get clean
+exit \$ERROR
+EOC
+
+# stop MySQL server in host
+[ -x /etc/init.d/mysql ] && /etc/init.d/mysql stop || true
+
+
+# needed to start mysql
+_revert_invoke $NANOCHROOT
+
+# moodle need to createdatabase and user
+chroot $NANOCHROOT << EOC || _exit "No se han podido instalar los paquetes para la versión live"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+export ERROR=0
+$MOODLE_PRE
+/etc/init.d/mysql start || ERROR=1
+dpkg-reconfigure -phigh moodle || ERROR=1
+/etc/init.d/mysql stop   || true
+/etc/init.d/apache2 stop || true
+exit \$ERROR
+EOC
+
+_add_invoke $NANOCHROOT
+
+# start MySQL server in host
+[ -x /etc/init.d/mysql ] && /etc/init.d/mysql start || true
+
+fi # end of [ ! -d $NANOCHROOT/var/lib/mysql/moodle ]
+
+fi # end of $NANOMAX_MOODLE
+
+
+
+  NANO_DELETE_PACKAGES="evolution-documentation-en foomatic-db foomatic-db-engine foomatic-filters gimp-help-en fvwm1"
+  NANO_DELETE_PACKAGES="$NANO_DELETE_PACKAGES gnome-user-guide gnome-user-guide-es gnome-mag gnome-media gnome-mount usplash-theme-ubuntu openjdk-6-jre-headless"
+  NANO_DELETE_PACKAGES="$NANO_DELETE_PACKAGES bsh bsh-gcj libjline-java"
+
+  if [ "$NANOMAX_MOODLE" = "0" ]; then
+    NANO_DELETE_PACKAGES="$NANO_DELETE_PACKAGES ubuntu-gdm-themes bsh bsh-gcj libjline-java max-java-plugin sun-java6-bin sun-java6-jre sun-java6-plugin"
+  fi
+
+  chroot $NANOCHROOT << EOC || _exit "Error limpiando paquetes no necesarios"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+yes| apt-get $APT_OPTS remove --purge $NANO_DELETE_PACKAGES
+apt-get $APT_OPTS autoremove --purge
+apt-get $APT_OPTS autoremove --purge
+$MOODLE_PRE
+apt-get $APT_OPTS install max-nanomax max-live max-nanomax-deps max-desktop-lxde-deps $MOODLE_PKGS
+EOC
+
+
+
+  cp $GENLIVE/sources.list $NANOCHROOT/etc/apt/
+
+  chroot $NANOCHROOT << EOC || _exit "Error actualizando max-nanomax"
+export LC_ALL=C
+export LC_MESSAGES=C
+export DEBCONF_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
+export UCF_FORCE_CONFFOLD=1
+yes | dpkg --configure -a
+yes | apt-get $APT_OPTS -f install
+apt-get update
+apt-get $APT_OPTS dist-upgrade
+apt-get clean
+EOC
+
+
+  _revert_invoke $NANOCHROOT
+
+
+  umount -l $NANOCHROOT/proc
+  umount -l $NANOCHROOT/sys
+  umount -l $NANOCHROOT/lib/modules/*/volatile 2>/dev/null
+
+  rm -rf $NANOCHROOT/home/*
+
+  mkdir -p $NANOMAX/casper
+
+  chroot $NANOCHROOT/ dpkg-query -W --showformat='${Package} ${Version}\n' > $NANOMAX/casper/filesystem.manifest
+  cp $NANOMAX/casper/filesystem.manifest  $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /ubiquity/d                     $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /casper/d                       $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /max-live/d                     $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /libdebian-installer4/d         $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /os-prober/d                    $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /ubuntu-live/d                  $NANOMAX/casper/filesystem.manifest-desktop
+  #sed -ie /user-setup/d                  $NANOMAX/casper/filesystem.manifest-desktop
+  sed -ie /example-content/d              $NANOMAX/casper/filesystem.manifest-desktop
+
+  # borrar temporal
+  rm -f $NANOMAX/casper/filesystem.manifest-desktope
+
+  # este archivo le indica al instalador que no hay seleccion de Escritorio, Alumno, Profesor, Servidor...
+  touch $NANOMAX/casper/nanomax
+
+  _echo "Deshabilitando contraseña de root (nanoMaX)"
+  chroot $NANOCHROOT/ usermod -L root
+
+  rm -f $NANOCHROOT/root/.bash_history
+
+  LZMA=""
+  # ver si hay que desactivar LZMA
+  $MKSQUASHFS -help 2>&1 | grep -q nolzma && LZMA="-nolzma"
+
+  rm -f $NANOMAX/casper/filesystem.squashfs
+  $MKSQUASHFS $NANOCHROOT/  $NANOMAX/casper/filesystem.squashfs $LZMA || _exit "No se ha podido generar el archivo NANOMAX squashfs"
+  chmod 644 $NANOMAX/casper/filesystem.squashfs || _exit "No se ha podido cambiar los permisos de NANOMAX squashfs"
+
+  _echo "Calculando tamaño filesystem.size..."
+
+  unsquashfs -lls $NANOMAX/casper/filesystem.squashfs | grep -v " inodes " | grep -v "unsquashfs:" | awk '{print $3}' | grep -v "," > /tmp/size.tmp
+  for i in `cat /tmp/size.tmp`; do a=$(($a+$i)); done
+  echo $a > $NANOMAX/casper/filesystem.size
+  rm -f /tmp/size.tmp
+
+
+  _echo "Copiando contenido live en nanomax..."
+
+  # añadir software portable del paquete max-win32-apps
+  if [ -d $GENLIVE/win32aps ]; then
+    _echo "Copiando max-win32-apps ..."
+    cp -ra $GENLIVE/win32aps/* $NANOMAX/
+  fi
+
+  mkdir -p $NANOMAX/isolinux
+  cp $CDRW/isolinux/*    $NANOMAX/isolinux/ || _exit "No se puede sobreescribir isolinux"
+  cp $GENLIVE/isolinux/* $NANOMAX/isolinux/ || _exit "No se puede sobreescribir isolinux"
+
+  # en genlive por defecto el CD
+  cp $GENLIVE/nano/text-cd.cfg  $NANOMAX/isolinux/txt.cfg
+  cp $GENLIVE/nano/text-usb.cfg $NANOMAX/isolinux/txt-usb.cfg
+
+  mkdir -p $NANOMAX/preseed
+  rm -f $NANOMAX/preseed/*
+  cp $GENLIVE/preseed/* $NANOMAX/preseed/ || _exit "No se puede sobreescribir preseed"
+
+  # cambiar variable de preseed
+  echo "ubiquity ubiquity/max_install_type string no_type" >> $NANOMAX/preseed/max.seed
+
+  mkdir -p $NANOMAX/.disk
+
+  printf "%s - $NANOARCH (%s)" "$TITLE" "$created" > $NANOMAX/.disk/info
+  printf "http://www.educa2.madrid.org/web/max" > $NANOMAX/.disk/release_notes_url
+  printf "full_cd/single" > $NANOMAX/.disk/cd_type
+  rm -f $NANOMAX/.disk/base_installable
+
+  zcat $NANOMAX/casper/initrd.gz | cpio --quiet -id conf/uuid.conf
+  cat conf/uuid.conf > $NANOMAX/.disk/casper-uuid-generic
+  rm -rf conf/
+
+  # kernel
+  KERNEL=$(basename $(ls $NANOCHROOT/boot/vmlinuz* -t| head -1)| sed 's/vmlinuz-//g')
+  cp $NANOCHROOT/boot/vmlinuz-${KERNEL}    $NANOMAX/casper/vmlinuz
+  cp $NANOCHROOT/boot/initrd.img-${KERNEL} $NANOMAX/casper/initrd.gz
+
+  # backharddi
+  [ -e $NANOCHROOT/boot/linux-backharddi-ng ] && cat $NANOCHROOT/boot/linux-backharddi-ng     > $NANOMAX/casper/vmback
+  [ -e $NANOCHROOT/boot/minirt-backharddi-ng.gz ] && cat $NANOCHROOT/boot/minirt-backharddi-ng.gz > $NANOMAX/casper/minirt.gz
+
+  ISO_IMAGE="${IMAGE_NAME}-CDlive-$NANOARCH-${stamp}.iso"
+
+  # delete *.cfg root files for CDROM
+  rm -f $NANOMAX/*.cfg
+
+  _echo "Creando ISO CDLIVE ${ISO_IMAGE}"
+  genisoimage -r -V "$TITLE" -cache-inodes -J -l -b isolinux/isolinux.bin \
+     -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 \
+     -boot-info-table -o ${ISO_IMAGE} $NANOMAX/ || _exit "Error generando la imagen ISO"
+
+  _echo "Generando md5 del CD"
+  md5sum ${ISO_IMAGE} > ${ISO_IMAGE}.md5 || _exit "Error generando el md5"
+  if [ "$ONLY_NANO_CDROM" = "1" ]; then
+    _exit "Parando ... ONLY_NANO_CDROM=1"
+  fi
+
+#==============================================
+  # Fichero img final
+  IMG=Nano${IMAGE_NAME}-$NANOARCH-${stamp}.img
+
+# Tamaño final del archivo img en megas
+SIZE=1900
+
+# Porcentajes destinados a cada una de las particiones. Varialos según las necesidades. El total, siempre igual a 100.
+P1=30
+P2=30
+P3=40
+
+
+_echo "Creando con ceros $IMG"
+dd if=/dev/zero of=$IMG count=$((SIZE*2**11)) || _exit "No se pudo crear $IMG"
+
+losetup /dev/loop0 $IMG || _exit "No se pudo montar $IMG"
+
+parted /dev/loop0 -s mklabel msdos mkpart primary fat16 0 $((SIZE*P1/100))MB
+parted /dev/loop0 -s mkpart primary ext3 $((SIZE*P1/100))MB $((SIZE*(P1+P2)/100))MB
+parted /dev/loop0 -s mkpart primary fat16 $((SIZE*(P1+P2)/100))MB ${SIZE}MB
+parted /dev/loop0 -s set 3 boot on
+
+sfdisk -d /dev/loop0 | grep start | tr -d "," | while read device x1 x2 start x3 size x4 id; do
+	num=${device#/dev/loop0p}
+	[ $num = 4 ] && break
+	file=${IMG}.$num
+	dd if=/dev/zero of=$file count=$size
+	losetup /dev/loop$num $file
+done || _exit "Error sfdisk"
+
+# La primera partición contendrá las portables. Utilizamos FAT16 por que aprovecha mejor el espacio
+mkdosfs -n "portables" -F 16 /dev/loop1 || _exit "Error al formatear 1a part"
+
+# La segunda partición será la que aporte persistencia al sistema live
+mkfs.ext3 /dev/loop2 -L "casper-rw" || _exit "Error al formatear 2a part"
+
+# La tercera partición tendrá el sistema live
+mkdosfs -n "sistema" -F 16 /dev/loop3 || _exit "Error al formatear 3a part"
+
+for i in 1 3; do
+	mkdir part$i
+	mount /dev/loop$i part$i
+done
+
+# Ahora mismo tenemos en el directorio part3 la tercera partición montada.
+# Aqui pondremos el sistema live con la estructura normal: un directorio 
+# casper y dentro un el filesystem.squashfs, etc.
+# En el raiz de esta partición tiene que haber un syslinux.cfg similar a 
+# isolinux.cfg. 
+# Añade código aquí para copiar la estructura de ficheros necesaria.
+
+_echo "Copiando sistema"
+
+cp -ra $NANOMAX/* part3/
+mv part3/isolinux part3/syslinux
+cp $GENLIVE/nano/text-usb.cfg part3/syslinux/txt.cfg
+cp /boot/memtest86+.bin part3/mt86plus
+
+
+# Metemos syslinux en la tercera partición
+syslinux /dev/loop3
+
+
+# En el directorio part1 está montada la partición de las portables. Añade código aquí para copiar la estructura de ficheros necesaria.
+_echo "Preparando aplicaciones portables"
+
+if [ $LOCAL_MIRROR ]; then
+  URL="http://$MIRROR/max75/portables.tar.gz"
+else
+  URL="http://max.educa.madrid.org/max75/portables.tar.gz"
+fi
+
+[ ! -f portables.tar.gz ] && wget $URL
+
+_echo "Extrayendo portables a pendrive"
+tar -zxf portables.tar.gz -C part1/ 2>/dev/null
+
+_echo "Copiando portables al DVD"
+mkdir -p $CDRW/portables/
+cp portables.tar.gz $CDRW/portables/
+
+sync
+
+# Finalmente reflejamos los cambios en el fichero img final. Esto tarda bastante.
+_echo "Creando imagen $IMG (tarda un poco)"
+sfdisk -d /dev/loop0 | grep start | tr -d "," | while read device x1 x2 start x3 size x4 id; do
+        num=${device#/dev/loop0p}
+        [ $num = 4 ] && break
+        file=${IMG}.$num
+	[ $num = 2 ] || umount /dev/loop$num
+        dd if=/dev/loop$num of=/dev/loop0 seek=$start
+done
+
+
+# Para hacer limpieza
+for i in 0 1 2 3; do
+	losetup -d /dev/loop$i
+done
+
+rm ${IMG}.* part* -rf
+
+install-mbr -e3 $IMG
+#===============================================
+
+   cp $GENLIVE/nano/* $CDRW/nanomax/
+
+   _echo "Generando md5sum de NanoMax"
+
+   md5sum ${IMG} > ${IMG}.md5
+fi
+
+

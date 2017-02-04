@@ -9,3 +9,8 @@ cache/
 binary.*
 chroot.*
 build.log
+
+MaX*.iso*
+
+cdimage.*
+chroot.*

@@ -1,18 +1,19 @@
-max-mate-core
-max-mate-desktop
-max-desktop-mate
-max-gnome-default-settings
+#max-mate-core
+#max-mate-desktop
+#max-desktop-mate
+#max-mate-default-settings
+#max-gnome-default-settings
 
 
 # for LIVE
-max-live
-ubiquity ubiquity-frontend-gtk ubiquity-slideshow-max ubiquity-casper
-gparted
+#max-live
+#ubiquity ubiquity-frontend-gtk ubiquity-slideshow-max ubiquity-casper
+#gparted
 
 
 
 
-firefox max-ubufox
+#firefox max-ubufox
 
 
 

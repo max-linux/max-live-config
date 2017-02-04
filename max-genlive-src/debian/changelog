@@ -1,0 +1,1389 @@
+max-genlive (9.0.max1) max; urgency=medium
+
+  * Build in MAX 9.0
+
+ -- Mario Izquierdo <hola@marioizquierdo.es>  Fri, 11 Nov 2016 17:42:57 +0100
+
+max-genlive (8.0.max21) max; urgency=medium
+
+  * Bump version MAX-8.0
+  * Remove nvidia from DVD
+  * Don't create empty nanomax or installer dirs
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 20 Jul 2015 09:11:31 +0200
+
+max-genlive (8.0.max20) max; urgency=medium
+
+  * Bump version to 8.1-rc1
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 27 Jun 2015 20:14:09 +0200
+
+max-genlive (8.0.max19) max; urgency=medium
+
+  * Change version to beta1
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 18 Jun 2015 13:02:18 +0200
+
+max-genlive (8.0.max18) max; urgency=medium
+
+  * Un-blacklist ibus packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 18 Jun 2015 12:50:51 +0200
+
+max-genlive (8.0.max17) max; urgency=medium
+
+  * Fix multiarch DVD repo fix
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 14 Jun 2015 14:24:59 +0200
+
+max-genlive (8.0.max16) max; urgency=medium
+
+  * Add nvidia drivers to DVD, close #689
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 13 Jun 2015 15:51:07 +0200
+
+max-genlive (8.0.max15) max; urgency=medium
+
+  * Blacklist dvdisaster
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 09 Jun 2015 20:23:34 +0200
+
+max-genlive (8.0.max14) max; urgency=medium
+
+  * Fix squashfs exclude file
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 09 Jun 2015 19:56:59 +0200
+
+max-genlive (8.0.max13) max; urgency=medium
+
+  * Fix mksquashfs, exclude /media
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 08 Jun 2015 11:06:38 +0200
+
+max-genlive (8.0.max12) max; urgency=low
+
+  * Blacklist apport and create max/i386 dir in CDROM repo
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 17 May 2015 16:48:13 +0200
+
+max-genlive (8.0.max11) max; urgency=low
+
+  * Move 32bits deb files to pool/max32 and create a simple repo for
+    multiarch install (plopp)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 15 May 2015 08:50:23 +0200
+
+max-genlive (8.0.max10) max; urgency=low
+
+  * Update GRUB and EFI
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 03 May 2015 19:48:43 +0200
+
+max-genlive (8.0.max9) max; urgency=low
+
+  * Remove max-servidor from paquetes MAX
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 03 May 2015 19:41:22 +0200
+
+max-genlive (8.0.max8) max; urgency=low
+
+  * Add «dpkg --add-architecture i386» in amd64, remove, oem-config
+    extra packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 03 May 2015 15:33:17 +0200
+
+max-genlive (8.0.max7) max; urgency=low
+
+  * Remove install i386 libs in chroot, use max-i386-libs package
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 02 May 2015 20:09:41 +0200
+
+max-genlive (8.0.max6) max; urgency=low
+
+  * Remove max-pdi from default install and blacklist unity-webapps-
+    common (Amazon) rel #644
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 02 May 2015 19:01:13 +0200
+
+max-genlive (8.0.max5) max; urgency=low
+
+  * No install moodle (apache, mysql, php) by default (rel #644)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 18 Apr 2015 12:57:08 +0200
+
+max-genlive (8.0.max4) max; urgency=low
+
+  * Update splash.pcx and change precise => trusty, 7.5 => 8.0
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 14 Mar 2015 23:46:11 +0100
+
+max-genlive (8.0.max3) max; urgency=low
+
+  * Fix anguage-selector-gnome and remove unity-webapps-service
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 14 Mar 2015 19:33:34 +0100
+
+max-genlive (8.0.max2) max; urgency=low
+
+  * Update isolinux bin files, and remove some blackliested packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 09 Mar 2015 19:06:07 +0100
+
+max-genlive (8.0.max1) max; urgency=low
+
+  * Build in MAX 8.0
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 08 Feb 2015 13:09:06 +0100
+
+max-genlive (7.0.max44) max; urgency=low
+
+  * Add alumno to dialout group
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 19 Dec 2014 21:03:53 +0100
+
+max-genlive (7.0.max43) max; urgency=low
+
+  * Only build UEFI iso in amd64
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 26 Nov 2014 22:24:31 +0100
+
+max-genlive (7.0.max42) max; urgency=low
+
+  * Log max-genlive output
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 26 Nov 2014 21:09:23 +0100
+
+max-genlive (7.0.max41) max; urgency=low
+
+  * Fix genisoimage to enable UEFI
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 25 Nov 2014 17:50:43 +0100
+
+max-genlive (7.0.max40) max; urgency=low
+
+  * Add extras repo
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 22 Nov 2014 20:38:10 +0100
+
+max-genlive (7.0.max39) max; urgency=low
+
+  * Install linux-lts-trusty-tools
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 22 Nov 2014 17:35:59 +0100
+
+max-genlive (7.0.max38) max; urgency=low
+
+  * Install UBUNTU_PACKAGES with ubuntu-desktop
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 02 Oct 2014 10:31:57 +0200
+
+max-genlive (7.0.max37) max; urgency=low
+
+  * MAX 7.5.1 with trusty kernel and Xorg
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 02 Oct 2014 10:22:51 +0200
+
+max-genlive (7.0.max36) max; urgency=low
+
+  * Force install robolinux-rcx in amd64
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 22 May 2014 09:08:19 +0200
+
+max-genlive (7.0.max35) max; urgency=low
+
+  * Set final version for 7.5
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 20 May 2014 11:54:00 +0200
+
+max-genlive (7.0.max34) max; urgency=low
+
+  * Add libcairo2:i386 libpango1.0-0:i386 for amd64 (needed by scratch i386)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 11 May 2014 17:43:28 +0200
+
+max-genlive (7.0.max33) max; urgency=low
+
+  * Clean background image lock before squash for a clean live DVD, rel #570
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 10 May 2014 18:47:20 +0200
+
+max-genlive (7.0.max32) max; urgency=low
+
+   * Bump version to rc3, install some i386 libs in amd64, close #565
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 27 Apr 2014 19:49:45 +0200
+
+max-genlive (7.0.max31) max; urgency=low
+
+  * Bump version to rc2
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 23 Mar 2014 15:18:17 +0100
+
+max-genlive (7.0.max30) max; urgency=low
+
+  * Fix splash.pcx, use a indexed image, not a RGB, rel #547
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 16 Mar 2014 17:11:33 +0100
+
+max-genlive (7.0.max29) max; urgency=low
+
+  * Update splash.pcx for new 7.5, close #547
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 12 Mar 2014 13:24:20 +0100
+
+max-genlive (7.0.max28) max; urgency=low
+
+  * Set version 7.5-rc1
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 09 Mar 2014 11:47:47 +0100
+
+max-genlive (7.0.max27) max; urgency=low
+
+  * Change repo /max70 => /max75
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 15 Jan 2014 17:46:26 +0100
+
+max-genlive (7.0.max26) max; urgency=low
+
+  * No install software-center
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 26 Dec 2013 17:36:28 +0100
+
+max-genlive (7.0.max25) max; urgency=low
+
+  * Replace 7.0 => 7.5
+  * Enable only-ubiquity entry, close #487
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 26 Dec 2013 16:53:51 +0100
+
+max-genlive (7.0.max24) max; urgency=low
+
+  * Change hostname to max75
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 15 Dec 2013 22:19:09 +0100
+
+max-genlive (7.0.max23) max; urgency=low
+
+  * Use max-linux package to install a kernel version
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 15 Dec 2013 15:55:59 +0100
+
+max-genlive (7.0.max22) max; urgency=low
+
+  * Add more fixes for UEFI
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 15 Dec 2013 00:35:15 +0100
+
+max-genlive (7.0.max21) max; urgency=low
+
+  * Add compiz packages to blacklist
+  * Rename EFI => efi dir
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 13 Dec 2013 22:44:56 +0100
+
+max-genlive (7.0.max20) max; urgency=low
+
+  * Use 127.0.0.1 as MIRROR
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 13 Dec 2013 17:02:08 +0100
+
+max-genlive (7.0.max19) max; urgency=low
+
+  * Fix UEFI menu text
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 15 May 2013 16:05:13 +0200
+
+max-genlive (7.0.max18) max; urgency=low
+
+  * Add UEFI dirs for amd64 distro
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 06 May 2013 20:20:24 +0200
+
+max-genlive (7.0.max16) max; urgency=low
+
+  * Bump version=7.0.1
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 06 May 2013 20:06:59 +0200
+
+max-genlive (7.0.max15) max; urgency=low
+
+  * Update IBM hacks
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 29 Nov 2012 15:31:16 +0100
+
+max-genlive (7.0.max14) max; urgency=low
+
+  * Remove isolinux/text.cfg and add help message in splash.pcx
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 23 Nov 2012 13:13:06 +0100
+
+max-genlive (7.0.max13) max; urgency=low
+
+  * Fix a lot of things
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 06 Nov 2012 16:33:04 +0100
+
+max-genlive (7.0.max12) max; urgency=low
+
+  * Bump version alpha2
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 11 Sep 2012 20:13:59 +0200
+
+max-genlive (7.0.max11) max; urgency=low
+
+  * Update preseed file
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 12 Jun 2012 19:26:20 +0200
+
+max-genlive (7.0.max10) max; urgency=low
+
+  * Update isolinux (c32) files
+  * Don't install linux-image (max-meta depends on kernel)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 01 Jun 2012 14:27:38 +0200
+
+max-genlive (7.0.max9) max; urgency=low
+
+  * Rebuild
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 01 Jun 2012 11:34:24 +0200
+
+max-genlive (7.0.max8) max; urgency=low
+
+  * Fix update-grub
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 21 May 2012 12:36:09 +0200
+
+max-genlive (7.0.max7) max; urgency=low
+
+  * Don't build bootlogo, use from gfxboot-theme-ubuntu
+  * Fix more max65 hostnames
+  * Don't configure console-setup
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 25 Jan 2012 15:06:14 +0100
+
+max-genlive (7.0.max6) max; urgency=low
+
+  * Call mksquashfs inside chroot
+  * Call genisoimage inside chroot
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 23 Jan 2012 18:39:36 +0100
+
+max-genlive (7.0.max5) max; urgency=low
+
+  * Safely remove update-grub divert
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 23 Jan 2012 18:15:50 +0100
+
+max-genlive (7.0.max4) max; urgency=low
+
+  * Update isolinux
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 23 Jan 2012 17:06:35 +0100
+
+max-genlive (7.0.max3) max; urgency=low
+
+  * Fix update-grub divert remove
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 23 Jan 2012 16:49:38 +0100
+
+max-genlive (7.0.max2) max; urgency=low
+
+  * Change repo from lucid to precise and from max60 to max70
+  * Extract casper-uuid from initrd.gz
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 19 Jan 2012 15:32:54 +0100
+
+max-genlive (7.0.max1) max; urgency=low
+
+  * Build in MAX 7.0
+  * Build based on Ubuntu 12.04 Precise
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 19 Jan 2012 15:03:56 +0100
+
+max-genlive (6.0.max44) max; urgency=low
+
+  * Use max-natty for DVD and remove linux-firmware from EXTRAS
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 18 Nov 2011 17:57:54 +0100
+
+max-genlive (6.0.max43) max; urgency=low
+
+  * Bump version to MaX 6.5 (final)
+  * Install linux-image-generic-lts-backport-natty (2.6.38) instead of 2.6.32
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 18 Nov 2011 15:28:36 +0100
+
+max-genlive (6.0.max42) max; urgency=low
+
+  * nanoMAX add mode for non persistent use
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 16 Nov 2011 22:00:51 +0100
+
+max-genlive (6.0.max41) max; urgency=low
+
+  * usr/share/max-genlive/hooks/75nanomax:
+    - Copy text-usb.cfg from /usr/share/max-genlive/nano
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 16 Nov 2011 17:47:13 +0100
+
+max-genlive (6.0.max40) max; urgency=low
+
+  * Leave nanoMAX kernel inside /casper
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 16 Nov 2011 17:14:00 +0100
+
+max-genlive (6.0.max39) max; urgency=low
+
+  * hooks/75nanomax:
+    - Rename directory isolinux => syslinux in nanoMAX
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 16 Nov 2011 17:01:08 +0100
+
+max-genlive (6.0.max38) max; urgency=low
+
+  * Bump version to MaX 6.5~rc4
+  * isolinux/syslinux: use text.cfg for CD and nanoMAX
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 16 Nov 2011 15:59:26 +0100
+
+max-genlive (6.0.max37) max; urgency=low
+
+  * Update splash.pcx
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 26 Oct 2011 13:31:15 +0200
+
+max-genlive (6.0.max36) max; urgency=low
+
+  * Remove backharddi from installed packages
+  * Remove backharddi from isolinux/syslinux config files
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 25 Oct 2011 17:29:50 +0200
+
+max-genlive (6.0.max35) max; urgency=low
+
+  * usr/share/max-genlive/hooks/75nanomax:
+    - Only copy backharddi if exists
+  * Bump version to MaX 6.5~rc3
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 17 Sep 2011 17:22:53 +0200
+
+max-genlive (6.0.max34) max; urgency=low
+
+  * Remove hal from BLACKLIST_PKGS
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 15 Sep 2011 16:12:50 +0200
+
+max-genlive (6.0.max33) max; urgency=low
+
+  * Update /usr/share/max-genlive/isolinux/splash.pcx with MaX 6.5 text
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 05 Sep 2011 18:56:59 +0200
+
+max-genlive (6.0.max32) max; urgency=low
+
+  * Add hal to BLACKLIST_PKGS
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 05 Sep 2011 15:42:46 +0200
+
+max-genlive (6.0.max31) max; urgency=low
+
+  * Change chroot hostname to 6.5
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 26 Jul 2011 13:07:01 +0200
+
+max-genlive (6.0.max30) max; urgency=low
+
+  * Bump version to MaX 6.5~rc1
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 07 Jul 2011 16:12:21 +0200
+
+max-genlive (6.0.max29) max; urgency=low
+
+  * Change strings 6.0 to 6.5
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 07 Jul 2011 15:23:36 +0200
+
+max-genlive (6.0.max28) max; urgency=low
+
+  * Bump version to 6.0.2
+  * Add GRUB2 timeout as debconf preseed
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 06 Jul 2011 16:14:48 +0200
+
+max-genlive (6.0.max27) max; urgency=low
+
+  * Blacklist landscape-client landscape-common packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 04 May 2011 19:14:01 +0200
+
+max-genlive (6.0.max26) max; urgency=low
+
+  * Rename memtest86+.bin file to mt86plus, (close ticket #353)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 28 Jan 2011 21:11:14 +0100
+
+max-genlive (6.0.max25) max; urgency=low
+
+  * Bump version MaX-6.0.1
+  * Accept ttf-mscorefonts-installer preseed EULA
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 27 Jan 2011 12:48:26 +0100
+
+max-genlive (6.0.max24) max; urgency=low
+
+  * Create shortcuts i386 amd64
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 18 Dec 2010 22:08:18 +0100
+
+max-genlive (6.0.max23) max; urgency=low
+
+  * Remove backharddi-ng-net from PAQUETES_EXTRA
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 18 Dec 2010 19:37:48 +0100
+
+max-genlive (6.0.max22) max; urgency=low
+
+  * Bump version MaX-6.0-rc3
+  * Remove .bash_history
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 18 Dec 2010 18:46:34 +0100
+
+max-genlive (6.0.max21) max; urgency=low
+
+  * debian/control: readd max-win32-apps depends package
+  * usr/share/max-genlive/hooks/75nanomax: copy HTML files to CDROM
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 13 Dec 2010 16:18:46 +0100
+
+max-genlive (6.0.max20) max; urgency=low
+
+  * usr/share/max-genlive/hooks/75nanomax:
+    - Create filesystem.size (close ticket #325)
+  * Bump version MaX-6.0-rc3
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 10 Dec 2010 15:39:24 +0100
+
+max-genlive (6.0.max19) max; urgency=low
+
+  * Install max-infantil instead of max-desktop-infantil-primaria
+  * Bump version MaX-6.0-rc2
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 20 Nov 2010 13:02:55 +0100
+
+max-genlive (6.0.max18) max; urgency=low
+
+  * Include infantil in install modes
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 14 Nov 2010 20:26:55 +0100
+
+max-genlive (6.0.max17) max; urgency=low
+
+  * Bump version to rc1
+  * Force install max-gnome-desktop-environment
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 13 Nov 2010 18:39:03 +0100
+
+max-genlive (6.0.max16) max; urgency=low
+
+  * 59zzinfantil:
+    - Add instalar-offilne.sh script
+    - Fix some build errors
+  * Bump version alpha6
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 23 Oct 2010 19:31:59 +0200
+
+max-genlive (6.0.max15) max; urgency=low
+
+  * Bump version to alpha5
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 18 Oct 2010 15:45:34 +0200
+
+max-genlive (6.0.max14) max; urgency=low
+
+  * 59zzinfantil: new CD for infantil and primaria extras
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 07 Oct 2010 19:25:46 +0200
+
+max-genlive (6.0.max13) max; urgency=low
+
+  * Set version alpha4
+  * Fix new backharddi kernel copy
+  * Fix md5sum generation
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 27 Sep 2010 22:00:44 +0200
+
+max-genlive (6.0.max12) max; urgency=low
+
+  * Add acpi=force reboot=warm to cmdline
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 01 Jul 2010 22:07:41 +0200
+
+max-genlive (6.0.max11) max; urgency=low
+
+  * Bump version alpha3
+  * Update splash image with 6.0 logo
+  * Remove max-win32-apps
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 01 Jul 2010 13:45:05 +0200
+
+max-genlive (6.0.max10) max; urgency=low
+
+  * Don't use noextraubuntu
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 12 Apr 2010 17:04:03 +0200
+
+max-genlive (6.0.max9) max; urgency=low
+
+  * Remove mythbuntu-gdm-theme from BLACKLIST
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 04 Apr 2010 23:05:07 +0200
+
+max-genlive (6.0.max8) max; urgency=low
+
+  * Use equivs and noextraubuntu package instead of apt preferences
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 04 Apr 2010 18:54:23 +0200
+
+max-genlive (6.0.max7) max; urgency=low
+
+  * Create file in etc/apt/preferences.d to not install BLACKLIST packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 04 Apr 2010 18:11:18 +0200
+
+max-genlive (6.0.max6) max; urgency=low
+
+  * Reorder clean and repo packages hooks
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 31 Mar 2010 20:14:05 +0200
+
+max-genlive (6.0.max5) max; urgency=low
+
+  * Blacklist more packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 29 Mar 2010 12:05:11 +0200
+
+max-genlive (6.0.max4) max; urgency=low
+
+  * Blacklist icedtea packages and clean gfxboot2 dir
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 22 Mar 2010 14:55:24 +0100
+
+max-genlive (6.0.max3) max; urgency=low
+
+  * Update from Ubuntu Lucid isolinux/ dir
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 17 Mar 2010 17:30:55 +0100
+
+max-genlive (6.0.max2) max; urgency=low
+
+  * Force lang and keyboard in isolinux files
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 10 Mar 2010 17:44:24 +0100
+
+max-genlive (6.0.max1) max; urgency=low
+
+  * Change version and fix some things
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 10 Mar 2010 12:16:43 +0100
+
+max-genlive (5.0.max16) max; urgency=low
+
+  * Update gfxboot-theme
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 15 Feb 2010 12:54:36 +0100
+
+max-genlive (5.0.max15) max; urgency=low
+
+  * Clean MIRROR var.
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sun, 06 Dec 2009 12:40:34 +0100
+
+max-genlive (5.0.max14) max; urgency=low
+
+  * Revert version to rc5
+  * Don't stop if apparmor return errors
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 04 Dec 2009 17:12:31 +0100
+
+max-genlive (5.0.max13) max; urgency=low
+
+  * Fix cups-pdf install (use moodle like hack)
+  * Call aa-complain cupsd to enable cups-pdf ~/PDF bug
+  * Set version to rc6
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Fri, 04 Dec 2009 16:01:05 +0100
+
+max-genlive (5.0.max12) max; urgency=low
+
+  * Set version to rc4
+  * Create MaX pool repos with every package instead of all at same time.
+  * Add extras: max-tcos-alumno max-tcos-profesor
+  * Update splash.pcx change logo open-phoenix
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 28 Nov 2009 13:50:50 +0100
+
+max-genlive (5.0.max11) max; urgency=low
+
+  * Blacklist gdm-guest-session package
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 10 Nov 2009 11:24:38 +0100
+
+max-genlive (5.0.max10) max; urgency=low
+
+  * Change version to rc3
+  * Generate NANO only in i386
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Sat, 07 Nov 2009 15:12:08 +0100
+
+max-genlive (5.0.max9) max; urgency=low
+
+  * New var to build nanoMaX with moodle (for MoodleMoot)
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Mon, 02 Nov 2009 18:23:16 +0100
+
+max-genlive (5.0.max8) max; urgency=low
+
+  * Blacklist resolvconf package
+  * Use cat instead of cp to configure resolv.conf in chroot.
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 24 Sep 2009 11:54:10 +0200
+
+max-genlive (5.0.max7) max; urgency=low
+
+  * Reemplazado backharddi por backharddi-ng
+
+ -- Pedro Peña Pérez <pedro.pena@open-phoenix.com>  Fri, 18 Sep 2009 22:16:39 +0200
+
+max-genlive (5.0.max6) max; urgency=low
+
+  [ Mario Izquierdo Rodríguez (Thinetic Systems SLNE) ]
+  * Update to MaX 5.0 rc2 version
+  * Exec update-dpsyco-skel in more places
+
+  [ Pedro Peña Pérez ]
+  * -
+
+ -- Pedro Peña Pérez <pedro.pena@open-phoenix.com>  Fri, 18 Sep 2009 22:16:37 +0200
+
+max-genlive (5.0.max5) max; urgency=low
+
+  * Don't cache esound package
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 08 Sep 2009 18:20:45 +0200
+
+max-genlive (5.0.max4) max; urgency=low
+
+  * Remove max-nanomax from MAIN packages
+  * Remove Release.gpg before creating
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 08 Sep 2009 17:23:24 +0200
+
+max-genlive (5.0.max3) max; urgency=low
+
+  * Change version to rc1
+  * Do autoremove before installing max packages
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 08 Sep 2009 16:34:49 +0200
+
+max-genlive (5.0.max2) max; urgency=low
+
+  * Hide some debug of console-setup preseed
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Tue, 08 Sep 2009 12:49:50 +0200
+
+max-genlive (5.0.max1) max; urgency=low
+
+  * Read 10debootstrap
+  * Configure console-setup
+  * Add langlist to preseed
+  * Don't include syslinux.cfg in CDlive
+  * Add file=max.preseed in nanoMaX and Cdlive syslinux.cfg
+  * Delete gdekslets package close #192
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Thu, 16 Jul 2009 01:08:38 +0200
+
+max-genlive (5.0.max0.1) max; urgency=low
+
+  * Build in MaX 5.0
+  * gfxboot: Update to 0.8.0 version
+  * Refactorize hooks scripts (make base with debootstrap)
+  * Support build i386 and amd64 images
+  * Add packages from main and max
+
+ -- Mario Izquierdo Rodríguez (Thinetic Systems SLNE) <mario.izquierdo@thinetic.es>  Wed, 20 May 2009 13:40:33 +0200
+
+max-genlive (4.0.max0.77) max; urgency=low
+
+  * usr/share/max-genlive/hooks/20configurechroot:
+    - Preseed b43 firmware download
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 08 May 2009 15:21:41 +0200
+
+max-genlive (4.0.max0.76) max; urgency=low
+
+  * Remove OpenOffice.org hack to install 2.4 (3.0.1 works in live mode)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 29 Apr 2009 13:36:32 +0200
+
+max-genlive (4.0.max0.75) max; urgency=low
+
+  * Fix hooks/75nanomax apt preferences (install OOo 2.4.1)
+  * usr/sbin/max-genlive:
+    - Unset HOME correctly
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 20 Jan 2009 17:16:07 +0100
+
+max-genlive (4.0.max0.74) max; urgency=low
+
+  * usr/sbin/max-genlive:
+    - Unset HOME and set LC_ALL and LANG to C
+  * hooks/20configurechroot hooks/55addmaxpackages hooks/70buildsquash
+    hooks/75nanomax
+    - In live mode use OpenOffice.org 2.4.1 and include in DVD OpenOffice.org 3.0 packages
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 20 Jan 2009 16:09:45 +0100
+
+max-genlive (4.0.max0.73) max; urgency=low
+
+  * usr/sbin/max-genlive
+    - Add to APT_OPTS '-o Dpkg::Options::=--force-confnew'
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 12 Jan 2009 21:00:56 +0100
+
+max-genlive (4.0.max0.72) max; urgency=low
+
+  * Update MaX kernel to 2.6.24-23-generic
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 11 Jan 2009 18:09:39 +0100
+
+max-genlive (4.0.max0.71) max; urgency=low
+
+  * Force upgrade with externar mirror
+  * Change main live mirror to es.archive.ubuntu.com
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 27 Dec 2008 16:22:54 +0100
+
+max-genlive (4.0.max0.70) max; urgency=low
+
+  * Update MaX kernel to 2.6.24-22-generic
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 30 Nov 2008 14:25:34 +0100
+
+max-genlive (4.0.max0.69) max; urgency=low
+
+  * Update MaX kernel to 2.6.24-21-generic
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 16 Nov 2008 18:03:53 +0100
+
+max-genlive (4.0.max0.68) max; urgency=low
+
+  * Update isolinux splash.pcx with Seneca and Thinetic logos
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 03 Sep 2008 13:28:56 +0200
+
+max-genlive (4.0.max0.67) max; urgency=low
+
+  * Update MaX kernel to 2.6.24-19-generic
+  * Change version to 4.0-rev1
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 25 Jun 2008 16:11:16 +0200
+
+max-genlive (4.0.max0.66) max; urgency=low
+
+  * Change version to rc5
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 11 Jun 2008 19:39:52 +0200
+
+max-genlive (4.0.max0.65) max; urgency=low
+
+  * 60clean 75nanomax:
+    - Fix typo in usermod command
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 09 Jun 2008 17:56:55 +0200
+
+max-genlive (4.0.max0.64) max; urgency=low
+
+  * max.seed:
+    - Add SAMBA debconf settings
+  * 60clean 75nanomax:
+    - Disable root password (fix gnome-system-tools adduser bug)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 09 Jun 2008 17:09:22 +0200
+
+max-genlive (4.0.max0.63) max; urgency=low
+
+  * export into chroot: UCF_FORCE_CONFFOLD=1
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 05 Jun 2008 18:55:10 +0200
+
+max-genlive (4.0.max0.62) max; urgency=low
+
+  * Update kernel to 2.6.24-18-generic
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 05 Jun 2008 18:37:58 +0200
+
+max-genlive (4.0.max0.61) max; urgency=low
+
+  * Update to maX 4.0 rc4 version
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 01 Jun 2008 21:44:31 +0200
+
+max-genlive (4.0.max0.60) max; urgency=low
+
+  * 75nanomax:
+    - Install xfdesktop4 before max-skel-conf and max-xfce-default-settings
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 28 May 2008 18:40:45 +0200
+
+max-genlive (4.0.max0.59) max; urgency=low
+
+  * max-genlive 75nanomax
+    - Update to use 2.6.24-17-generic kernel
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 28 May 2008 15:37:27 +0200
+
+max-genlive (4.0.max0.58) max; urgency=low
+
+  * Rename NanoMaX cd in isolunux.cfg too
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 17 May 2008 12:10:50 +0200
+
+max-genlive (4.0.max0.57) max; urgency=low
+
+  * Change CD name from CD-Nano-MaX to MaX-40-CDlive
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 16 May 2008 20:01:29 +0200
+
+max-genlive (4.0.max0.56) max; urgency=low
+
+  * Remove usr/sbin/policy-rc.d substitution (not needed)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 15 May 2008 11:45:07 +0200
+
+max-genlive (4.0.max0.55) max; urgency=low
+
+  * Be less verbose in portables extract
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 13 May 2008 21:36:27 +0200
+
+max-genlive (4.0.max0.54) max; urgency=low
+
+  * Rename usr/sbin/policy-rc.d to avoid hal instal break
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 13 May 2008 18:10:16 +0200
+
+max-genlive (4.0.max0.53) max; urgency=low
+
+  * Add depends on syslinux, parted, mbr and tree
+  * Copy potables.tar.gz into DVD (not extract)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 12 May 2008 15:25:21 +0200
+
+max-genlive (4.0.max0.52) max; urgency=low
+
+  * Rebuild nanoMaX builder
+  * Add portables data
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 12 May 2008 10:07:25 +0200
+
+max-genlive (4.0.max0.51) max; urgency=low
+
+  * First version of nanoMax generator
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 08 May 2008 15:41:26 +0200
+
+max-genlive (4.0.max0.50) max; urgency=low
+
+  * Force timezone to Europe/Madrid
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 06 May 2008 09:23:41 +0200
+
+max-genlive (4.0.max0.49) max; urgency=low
+
+  * Change iso title
+  * Disable uninstalling user-setup
+  * Update dpsyco before doing squashfs
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 30 Apr 2008 16:09:12 +0200
+
+max-genlive (4.0.max0.48) max; urgency=low
+
+  * 60clean:
+    - Clean update-notifier warnings
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 30 Apr 2008 15:27:33 +0200
+
+max-genlive (4.0.max0.47) max; urgency=low
+
+  * Change version to rc1
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 30 Apr 2008 11:23:49 +0200
+
+max-genlive (4.0.max0.46) max; urgency=low
+
+  * Update gfxboot-theme-ubuntu package (0.5.20)
+    - Better language support
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 23 Apr 2008 16:01:31 +0200
+
+max-genlive (4.0.max0.45) max; urgency=low
+
+  * max.seed:
+   - Add sambashare to defaults groups
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 22 Apr 2008 12:12:36 +0200
+
+max-genlive (4.0.max0.44) max; urgency=low
+
+  * Change version to beta4
+  * Install 915resolution in mode=terminales
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 20 Apr 2008 22:18:35 +0200
+
+max-genlive (4.0.max0.43) max; urgency=low
+
+  * Enable restricted in sources.list
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 19 Apr 2008 17:33:30 +0200
+
+max-genlive (4.0.max0.42) max; urgency=low
+
+  * Install max-drivers
+  * Fix ubuntu double pool typo
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 16 Apr 2008 21:56:29 +0200
+
+max-genlive (4.0.max0.41) max; urgency=low
+
+  * 20configurechroot:
+    - Enable tzdata in preseed
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 16 Apr 2008 18:30:37 +0200
+
+max-genlive (4.0.max0.40) max; urgency=low
+
+  * Add nvidia-glx-new and firmware to PAQUETES_EXTRA (need to add more packages here)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 13 Apr 2008 14:26:04 +0200
+
+max-genlive (4.0.max0.39) max; urgency=low
+
+  * 60clean:
+    - Install backports and restricted modules
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 13 Apr 2008 12:58:12 +0200
+
+max-genlive (4.0.max0.38) max; urgency=low
+
+  * Rebuild
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 10 Apr 2008 23:10:24 +0200
+
+max-genlive (4.0.max0.37) max; urgency=low
+
+  * Change version to beta3
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 07 Apr 2008 10:26:18 +0200
+
+max-genlive (4.0.max0.36) max; urgency=low
+
+  * 60clean:
+    - Fix purge packages
+  * gfxboot.cfg:
+    - Really delete OEM install, not comment
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 04 Apr 2008 11:16:27 +0200
+
+max-genlive (4.0.max0.35) max; urgency=low
+
+  * Try to remove /home/* during install max-desktop-all
+  * Change mirror in sources.list es.archive.ubuntu => archive.ubuntu
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 04 Apr 2008 09:18:37 +0200
+
+max-genlive (4.0.max0.34) max; urgency=low
+
+  * Delete chroot/home/*, some package create it and max-genlive crash
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 02 Apr 2008 23:24:07 +0200
+
+max-genlive (4.0.max0.33) max; urgency=low
+
+  * max.seed:
+    - Add more preseed vars
+  * Fix typo in stop MySQL server in 50maxinstaller
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 02 Apr 2008 17:40:45 +0200
+
+max-genlive (4.0.max0.32) max; urgency=low
+
+  * 50maxinstaller:
+    - Stop MySQL server in host before starting into chroot and start after moodle configure
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 01 Apr 2008 18:34:54 +0200
+
+max-genlive (4.0.max0.31) max; urgency=low
+
+  * 50maxinstaller:
+    - Moodle need a running MySQL instance to configure database and users
+  * Move _add_invoke code to max-genlive script
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 01 Apr 2008 14:23:09 +0200
+
+max-genlive (4.0.max0.30) max; urgency=low
+
+  * Depends on new package max-win32-apps
+  * 80builiso:
+    - Copy win32apps contents to ISO
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 01 Apr 2008 10:54:56 +0200
+
+max-genlive (4.0.max0.29) max; urgency=low
+
+  * Set MIRROR=192.168.0.3 only if no MIRROR var found
+  * Disable preseed console-setup
+  * Add _exit at ENABLE_EXTRA shell exit 1
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 31 Mar 2008 16:04:59 +0200
+
+max-genlive (4.0.max0.28) max; urgency=low
+
+  * isolinux.cfg:
+    - Remove preseed from cmdline (gfxboot append)
+  * gfxboot.cfg:
+    - Add new option textmode (don't start X session)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 29 Mar 2008 00:10:23 +0100
+
+max-genlive (4.0.max0.27) max; urgency=low
+
+  * Rename old MIRROR var to ISO_MIRROR
+  * Remove example-content package in manifest-desktop file
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 28 Mar 2008 17:00:50 +0100
+
+max-genlive (4.0.max0.26) max; urgency=low
+
+  * Revert invoke before building squashfs
+  * Move _revert_invoke to /usr/sbin/max-genlive
+  * New var MIRROR to use with LOCAL_MIRROR (delete sources.list.local)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 28 Mar 2008 14:48:04 +0100
+
+max-genlive (4.0.max0.25) max; urgency=low
+
+  * Change local sources.list to 192.168.0.3 (FIXME create a nev var to avoid this)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 28 Mar 2008 13:10:38 +0100
+
+max-genlive (4.0.max0.24) max; urgency=low
+
+  * Only replace invoke-rc.d and start-stop-daemon if *.REAL not exists
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 27 Mar 2008 17:42:46 +0100
+
+max-genlive (4.0.max0.23) max; urgency=low
+
+  * Change invoke-rc.d and start-stop-daemon with fake scripts
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 27 Mar 2008 17:16:18 +0100
+
+max-genlive (4.0.max0.22) max; urgency=low
+
+  * max.seed:
+    - Add madrid and alumno users to vboxusers group (created by max-live package)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 27 Mar 2008 12:10:01 +0100
+
+max-genlive (4.0.max0.21) max; urgency=low
+
+  * Change version to beta2
+  * Disable preseeding xorg and tzdata
+  * Remove extra apt-get update line
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 27 Mar 2008 11:57:17 +0100
+
+max-genlive (4.0.max0.20) max; urgency=low
+
+  * isolinux/splash.pcx:
+    - Remove alfa1 string
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 26 Mar 2008 16:09:28 +0100
+
+max-genlive (4.0.max0.19) max; urgency=low
+
+  * isolinux.cfg:
+    - Translate HDD boot menu option
+  * gfxboot.cfg:
+    - Hide OEM install
+    - Add all_generic_ide option for DVD problems
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 25 Mar 2008 14:16:15 +0100
+
+max-genlive (4.0.max0.18) max; urgency=low
+
+  * 80buildiso:
+    - Fix printf arguments 
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 24 Mar 2008 19:40:55 +0100
+
+max-genlive (4.0.max0.17) max; urgency=low
+
+  * Check if mksquashfs have nolzma argument
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 24 Mar 2008 14:21:44 +0100
+
+max-genlive (4.0.max0.16) max; urgency=low
+
+  * Change iso name to ubuntu-8.04-beta-desktop-i386.iso
+  * Build MaX 4.0 beta1 (alfa is old)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 23 Mar 2008 18:03:12 +0100
+
+max-genlive (4.0.max0.15) max; urgency=low
+
+  * 60clean:
+    - Cache esound and libesd0 without apt-get (conflicts with pulseaudio-esound-compat)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 18 Mar 2008 16:25:23 +0100
+
+max-genlive (4.0.max0.14) max; urgency=low
+
+  * 60clean:
+    - Add max-terminales package
+  * 80buildiso
+    - Remove wuby (windows installer)
+  * max-genlive
+    - Cache esound, libesd0, discover, discover-data, libdicover2 (needed by TCOS)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 17 Mar 2008 22:36:54 +0100
+
+max-genlive (4.0.max0.13) max; urgency=low
+
+  * 80buildiso:
+    - Fix typo with double > >
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 15 Mar 2008 10:10:10 +0100
+
+max-genlive (4.0.max0.12) max; urgency=low
+
+  * max-genlive 80buildiso
+    - Edit /cdrom/.disk/info and release_notes_url files
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 14 Mar 2008 23:27:30 +0100
+
+max-genlive (4.0.max0.11) max; urgency=low
+
+  * 60clean:
+    - Check for number to packages to purge, if 0 not exec dpkg --purge
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 14 Mar 2008 15:59:41 +0100
+
+max-genlive (4.0.max0.10) max; urgency=low
+
+  * max.seed:
+    - Preseed Language instalation to Spanish
+    - Add max_install_type (escritorio, alumno, profesor, servidor, nanomax)
+  * 60clean:
+    - Dont add to manifest all depends, leave apt to install it
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 12 Mar 2008 18:33:09 +0100
+
+max-genlive (4.0.max0.9) max; urgency=low
+
+  * 60clean:
+    - Remove old kernels
+  * max.seed:
+    - Add madrid user and hide userinfo step
+    - Disable migration assistant
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Tue, 11 Mar 2008 10:08:02 +0100
+
+max-genlive (4.0.max0.8) max; urgency=low
+
+  * usr/share/max-genlive/hooks/60clean:
+    - Generate metapackages list (alumno, profesor, servidor)
+  * Add max-server and backharddi packages to DVD cache
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 08 Mar 2008 12:39:13 +0100
+
+max-genlive (4.0.max0.7) max; urgency=low
+
+  * Revert isolinux.cfg pressed lang and keyboard
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Fri, 07 Mar 2008 12:12:12 +0100
+
+max-genlive (4.0.max0.6) max; urgency=low
+
+  * Build lang menu again but not show
+  * Add max.seed file to pressed lang Spanish and other installer things
+  * Remove preseed in isolinux.cfg
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 05 Mar 2008 18:49:39 +0100
+
+max-genlive (4.0.max0.5) max; urgency=low
+
+  * Translate OEM install and Test memory phrases
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 02 Mar 2008 21:01:33 +0100
+
+max-genlive (4.0.max0.4) max; urgency=low
+
+  * Install es.tr to translate gfxboot messages
+  * Remove backharddi from cached packages (not in MaX 4.0 yet)
+  * Remove preseed of console-data
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 02 Mar 2008 15:51:57 +0100
+
+max-genlive (4.0.max0.3) max; urgency=low
+
+  * usr/share/max-genlive/hooks/50max-installer:
+    - Fix typo ERROR=0 not 1
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 02 Mar 2008 13:51:19 +0100
+
+max-genlive (4.0.max0.2) max; urgency=low
+
+  * Check for errors during update/upgrade and exit if found
+  * Build squashfs with -nolzma (ubuntu don't support it)
+  * Add gfxboot build:
+    - Disable language popup at startup
+    - Translate some strings in po/es.po
+    - Translate Modes menu (remove driver-update entry)
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sun, 02 Mar 2008 12:57:19 +0100
+
+max-genlive (4.0.max0.1) max; urgency=low
+
+  * Update to MaX 4.0
+  * Change gutsy => hardy
+  * Update splash.pcx with blue background
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 01 Mar 2008 17:59:47 +0100
+
+max-genlive (3.1.max4) max; urgency=low
+
+  * Add virtualbox-ose in DVD packages
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Sat, 02 Feb 2008 23:21:48 +0100
+
+max-genlive (3.1.max3) max; urgency=low
+
+  * New version
+  * Support cache os packages (need to sign with MaX keyring)
+  * More small fixes
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Thu, 31 Jan 2008 17:35:05 +0100
+
+max-genlive (3.1.max2) max; urgency=low
+
+  * Movido todo el código a un directorio de plugins
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Mon, 28 Jan 2008 15:25:09 +0100
+
+max-genlive (3.1.max1) max; urgency=low
+
+  * Initial release
+
+ -- Mario Izquierdo (mariodebian) <mariodebian@gmail.com>  Wed, 23 Jan 2008 20:57:38 +0100

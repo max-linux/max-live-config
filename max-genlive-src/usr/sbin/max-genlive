@@ -1,0 +1,347 @@
+#!/bin/bash
+
+if [ "$1" = "amd64" ]; then
+  LOCAL_MIRROR=1 PROXY="http://192.168.0.2:3142" MIRROR="archive.ubuntu.com" ENABLE_EXTRA=1 AMD64=1 ./max-genlive 2>&1 | tee -a max-amd64.log
+  exit 0
+elif [ "$1" = "i386" ]; then
+  LOCAL_MIRROR=1 PROXY="http://192.168.0.2:3142" MIRROR="archive.ubuntu.com" ENABLE_EXTRA=1 ./max-genlive 2>&1 | tee -a max-i386.log
+  exit 0
+fi
+
+
+DISTRO=xenial
+DISTRO_VERSION="16.04"
+ARCH=i386
+NANOARCH=i386
+MAX_VERSION="9.0-beta1"
+IMAGE_NAME="MaX-${MAX_VERSION}"
+LINUX_IMAGE="max-linux"
+LINUX_HEADERS="max-linux-headers"
+XSERVER_XORG="xserver-xorg"
+MAXHOSTNAME=max90
+INSTALL_MOODLE=no
+MIRRORMAX="max2.educa.madrid.org"
+
+## Create a 12.04 with trusty kernel and Xorg
+#LINUX_IMAGE="linux-image-generic-lts-trusty max-linux"
+#LINUX_HEADERS="linux-headers-generic-lts-trusty max-linux-headers linux-lts-trusty-tools"
+#XSERVER_XORG="xserver-xorg-lts-trusty libgl1-mesa-dri-lts-trusty libgl1-mesa-glx-lts-trusty x11-xserver-utils-lts-trusty"
+
+unset HOME
+export LC_ALL=C
+export LANG=C
+
+
+stamp=$(date '+%Y%m%d_%H%M')
+created=$(date '+%Y%m%d')
+
+if [ "$MIRROR" = "" ]; then
+  MIRROR=127.0.0.1
+fi
+
+if [ "$AMD64" = "1" ]; then
+  ARCH=amd64
+fi
+
+TITLE="MaX ${MAX_VERSION}"
+
+
+if [ "$LOCAL_MIRROR" = "" ]; then
+  LOCAL_MIRROR=
+else
+  LOCAL_MIRROR=1
+fi
+
+if [ "$ENABLE_EXTRA" = "" ]; then
+  ENABLE_EXTRA=
+else
+  ENABLE_EXTRA=1
+fi
+
+if [ "$ENABLE_EXTRA_INFANTIL" = "" ]; then
+  ENABLE_EXTRA_INFANTIL=
+else
+  ENABLE_EXTRA_INFANTIL=1
+fi
+
+if [ "$ENABLE_NANO" = "" ]; then
+  ENABLE_NANO=
+else
+  ENABLE_NANO=1
+fi
+
+if [ "$ENABLE_NANOMAX_MOODLE" = "1" ]; then
+  NANOMAX_MOODLE=1
+else
+  NANOMAX_MOODLE=0
+fi
+
+
+CURDIR=$(pwd)
+
+CHROOT=$CURDIR/chroot.${ARCH}
+NANOCHROOT=$CURDIR/nanochroot.${ARCH}
+CDRW=$CURDIR/cdimage.${ARCH}
+CDINF=$CURDIR/cdinfantil
+NANOMAX=$CDRW/nanomax
+#MKSQUASHFS=/usr/local/bin/mksquashfs
+MKSQUASHFS=/usr/bin/mksquashfs
+
+PAQUETES_EXTRA_MAIN="b43-fwcutter build-essential dpkg-dev fakeroot g++ capiutils ipppd "
+PAQUETES_EXTRA_MAIN="$PAQUETES_EXTRA_MAIN linux-wlan-ng localechooser-data lupin-support mouseemu "
+PAQUETES_EXTRA_MAIN="$PAQUETES_EXTRA_MAIN patch pptp-linux setserial"
+if [ "$ARCH" = "amd64" ]; then
+  PAQUETES_EXTRA_MAIN="$PAQUETES_EXTRA_MAIN efibootmgr grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed secureboot-db shim shim-signed"
+fi
+
+#PAQUETES_EXTRA_RESTRICTED="drdsl"
+PAQUETES_EXTRA_RESTRICTED="virtualbox-guest-utils virtualbox-guest-x11 virtualbox-guest-dkms"
+#PAQUETES_EXTRA_RESTRICTED="$PAQUETES_EXTRA_RESTRICTED nvidia-current nvidia-settings"
+
+PAQUETES_INFANTIL="max-desktop-infantil-primaria max-infantil"
+
+PAQUETES_EXTRA="tcos max-alumno max-profesor max-terminales"
+PAQUETES_EXTRA="$PAQUETES_EXTRA max-tcos-alumno max-tcos-profesor"
+PAQUETES_EXTRA="$PAQUETES_EXTRA linux-wlan-ng-firmware max-desktop-infantil-primaria max-infantil"
+
+BLACKLIST_PKGS="resolvconf "
+#BLACKLIST_PKGS="$BLACKLIST_PKGS python-ubuntuone python-ubuntuone-client python-ubuntuone-storageprotocol ubuntuone-client"
+#BLACKLIST_PKGS="$BLACKLIST_PKGS ubuntuone-client-gnome rhythmbox-ubuntuone-music-store"
+BLACKLIST_PKGS="$BLACKLIST_PKGS arora"
+BLACKLIST_PKGS="$BLACKLIST_PKGS x11proto-core-dev x11proto-composite-dev python-dev libglade2.0-cil-dev xtrans-dev"
+BLACKLIST_PKGS="$BLACKLIST_PKGS x11proto-kb-dev x11proto-input-dev x11proto-core-dev libxt-dev libxdmcp-dev libxcb1-dev libxau-dev"
+BLACKLIST_PKGS="$BLACKLIST_PKGS libx11-dev libltdl-dev libplymouth-dev libpthread-stubs0-dev"
+BLACKLIST_PKGS="$BLACKLIST_PKGS mythbuntu-default-settings"
+BLACKLIST_PKGS="$BLACKLIST_PKGS freemind-doc libatk1.0-doc libglib2.0-doc libgtk2.0-doc libpango1.0-doc lilypond-doc winff-doc"
+BLACKLIST_PKGS="$BLACKLIST_PKGS landscape-client landscape-common"
+# Ubuntu 12.04 globalmenu
+BLACKLIST_PKGS="$BLACKLIST_PKGS appmenu-gtk appmenu-gtk3 appmenu-qt indicator-appmenu"
+BLACKLIST_PKGS="$BLACKLIST_PKGS firefox-globalmenu thunderbird-globalmenu"
+# Ubuntu 12.04 Overlay scrollbar
+BLACKLIST_PKGS="$BLACKLIST_PKGS overlay-scrollbar"
+## gdm by default https://bugs.launchpad.net/ubuntu/+source/gdm/+bug/805154
+##BLACKLIST_PKGS="$BLACKLIST_PKGS lightdm unity-greeter"
+# ibus (chinnese and japan input)
+#BLACKLIST_PKGS="$BLACKLIST_PKGS ibus-gtk ibus-gtk3 ibus-pinyin ibus-table pinyin-database"
+# don't install English help #439
+BLACKLIST_PKGS="$BLACKLIST_PKGS libreoffice-help-en-gb libreoffice-help-en-us"
+# ubiquity install KDE
+BLACKLIST_PKGS="$BLACKLIST_PKGS ubiquity-frontend-kde"
+#BLACKLIST_PKGS="$BLACKLIST_PKGS compiz compiz-core" # no remove compiz
+# no software center
+BLACKLIST_PKGS="$BLACKLIST_PKGS software-center"
+# ubuntu trusty
+BLACKLIST_PKGS="$BLACKLIST_PKGS oneconf oneconf-common"
+BLACKLIST_PKGS="$BLACKLIST_PKGS unity-gtk2-module unity-gtk3-module unity-services xul-ext-unity "
+BLACKLIST_PKGS="$BLACKLIST_PKGS unity-webapps-common "
+BLACKLIST_PKGS="$BLACKLIST_PKGS apport apport-gtk "
+BLACKLIST_PKGS="$BLACKLIST_PKGS dvdisaster"
+
+
+
+BLACKLIST_PKGS="$BLACKLIST_PKGS texlive-base texlive-binaries texlive-extra-utils texlive-font-utils texlive-fonts-recommended texlive-fonts-recommended-doc"
+BLACKLIST_PKGS="$BLACKLIST_PKGS texlive-generic-recommended texlive-latex-base texlive-latex-base-doc texlive-latex-extra texlive-latex-extra-doc"
+BLACKLIST_PKGS="$BLACKLIST_PKGS texlive-latex-recommended texlive-latex-recommended-doc texlive-pictures texlive-pictures-doc texlive-pstricks texlive-pstricks-doc"
+
+BLACKLIST_PKGS="$BLACKLIST_PKGS autogen-doc denemo-doc geda-doc gputils-doc libxine2-doc maxima-doc openshot-doc qucs-doc scribus-doc"
+BLACKLIST_PKGS="$BLACKLIST_PKGS fluid-soundfont-gm fonts-noto fonts-noto-cjk fonts-noto-hinted fonts-noto-mono fonts-noto-unhinted"
+
+
+
+
+#  appmenu-qt* compiz* compiz-core* compiz-gnome* compiz-plugins-default* ibus*
+#  ibus-gtk* ibus-gtk3* ibus-pinyin* ibus-table* indicator-appmenu*
+#  libcompizconfig0* libunity-core-6.0-9* libunity-webapps0* oneconf*
+#  oneconf-common* overlay-scrollbar* overlay-scrollbar-gtk2*
+#  overlay-scrollbar-gtk3* python-oneconf* python3-oneconf* resolvconf*
+#  software-center* ubuntu-desktop* ubuntu-minimal* unity*
+#  unity-control-center* unity-control-center-signon* unity-gtk2-module*
+#  unity-gtk3-module* unity-lens-applications* unity-services*
+#  unity-webapps-common* unity-webapps-qml* unity-webapps-service*
+#  webaccounts-extension-common* webapp-container* xorg* xorg-docs-core*
+#  xul-ext-unity* xul-ext-webaccounts* xul-ext-websites-integration*
+
+
+BASE=""
+BASE="/home/mario/git/max-live-config/max-genlive-src"
+NEW_ISOLINUX=${BASE}/usr/share/max-genlive/isolinux
+GENLIVE=${BASE}/usr/share/max-genlive
+APT_OPTS="-y --force-yes -o Dpkg::Options::=\"--force-confnew\""
+HOOKS=${BASE}/usr/share/max-genlive/hooks/
+
+
+MY_NAME=$(basename $0)
+
+
+ayuda() {
+cat << EOF
+  Ayuda de max-genlive:
+
+    max-genlive i386
+    max-genlive amd64
+
+    No hacen falta demasiadas cosas para hacer generar un livecd pero
+    existen algunas variables para personalizarlo más:
+
+    LOCAL_MIRROR=1 usará /usr/share/max-genlive/sources.list-local
+                   como repositorio para hacer las descargas
+                   Viene configurado como $MIRROR LOCAL_MIRROR=$LOCAL_MIRROR
+
+    MIRROR=$MIRROR IP o nombre de equipo que se usará para el mirror
+
+    DISABLE_SQUASHFS=1 ni comprime ni descomprime el archivo squashfs (para hacer pruebas)
+
+    DISABLE_CLEAN=1 no borra los directorios temporales
+
+    ENABLE_EXTRA=1 Añade al DVD varios paquetes (ver variable PAQUETES_EXTRA)
+                   Para usar esta opción tienes que ser desarrollador de max y tener cuenta
+                   SSH en max.educa.madrid.org porque hay que subir el archivo Release
+                   firmarlo con la clave GPG de MaX y descargar el Release.gpg
+
+    ENABLE_EXTRA_INFANTIL=1 Crea un CDROM multiarquitectura  de complementos para
+                            infantil y primaria (sólo en i386)
+
+    ENABLE_NANO=1 Generar NanoMax y CDlive
+
+    ONLY_NANO_CDROM=1 Generar CDROM NanoMax y salir
+
+    ENABLE_NANOMAX_MOODLE=1 Añadir moodle a nanoMAX
+
+    AMD64=1 Build amd64 images (default i386)
+
+EOF
+}
+
+_exit() {
+  echo "Se ha producido un error:"
+  echo "--------------------------------"
+  echo "$@"
+  echo "--------------------------------"
+  . $HOOKS/90umount
+  echo "matando $MY_NAME"
+  killall $MY_NAME
+}
+
+_echo() {
+  echo ""
+  echo " *  $@"
+  echo ""
+}
+
+
+_revert_invoke() {
+ if [ "$1" != "" ]; then
+   DIR=$1
+ else
+   DIR=$CHROOT
+ fi
+ if [ -e $DIR/usr/sbin/invoke-rc.d.REAL ]; then
+   _echo "Revirtiendo /usr/sbin/invoke-rc.d"
+   mv $DIR/usr/sbin/invoke-rc.d.REAL $DIR/usr/sbin/invoke-rc.d
+ fi
+ if [ -e $DIR/sbin/start-stop-daemon.REAL ]; then
+   _echo "Revirtiendo /sbin/start-stop-daemon"
+   mv $DIR/sbin/start-stop-daemon.REAL $DIR/sbin/start-stop-daemon
+ fi
+ if [ -e $DIR/sbin/initctl.distrib ]; then
+   rm -f $DIR/sbin/initctl
+   chroot $DIR dpkg-divert --local --remove /sbin/initctl
+   [ -e $DIR/sbin/initctl.distrib ] && \
+     mv $DIR/sbin/initctl.distrib $DIR/sbin/initctl
+ fi
+ if [ -e $DIR/usr/sbin/update-grub.distrib ]; then
+   rm -f $DIR/usr/sbin/update-grub
+   chroot $DIR dpkg-divert --local --remove /usr/sbin/update-grub
+   [ -e $DIR/usr/sbin/update-grub.distrib ] && \
+     mv $DIR/usr/sbin/update-grub.distrib $DIR/usr/sbin/update-grub
+ fi
+
+ rm -f $DIR/usr/sbin/policy-rc.d
+}
+
+_add_invoke() {
+ if [ "$1" != "" ]; then
+   DIR=$1
+ else
+   DIR=$CHROOT
+ fi
+  if [ ! -e $DIR/usr/sbin/invoke-rc.d.REAL ]; then
+    # Cambiamos invoke-rc.d
+    mv $DIR/usr/sbin/invoke-rc.d $DIR/usr/sbin/invoke-rc.d.REAL
+    cat << EOF > $DIR/usr/sbin/invoke-rc.d
+#!/bin/sh
+echo "" >&2
+echo "  ** Fake invoke-rc.d called with args: '\$@'" >&2
+echo "" >&2
+exit 0
+EOF
+    chmod +x $DIR/usr/sbin/invoke-rc.d
+  fi
+
+  if [ ! -e $DIR/sbin/start-stop-daemon.REAL ]; then
+    # Cambiamos start-stop-daemon
+    mv $DIR/sbin/start-stop-daemon $DIR/sbin/start-stop-daemon.REAL
+    cat << EOF > $DIR/sbin/start-stop-daemon
+#!/bin/sh
+echo "" >&2
+echo "  ** Fake start-stop-daemon called with args: '\$@'" >&2
+echo "" >&2
+exit 0
+EOF
+    chmod +x $DIR/sbin/start-stop-daemon
+  fi
+
+
+  if [ -e $DIR/usr/sbin/policy-rc.d ]; then
+cat << EOF > $DIR/usr/sbin/policy-rc.d
+#!/bin/sh
+echo "All runlevel operations denied by policy, args: '\$@'" >&2
+exit 101
+EOF
+    chmod +x $DIR/usr/sbin/policy-rc.d
+  fi
+
+}
+
+
+if [ "$1" = "--help" ]; then
+  ayuda
+  _exit ""
+fi
+
+
+# esto es para pruebas
+#. /usr/share/max-genlive/hooks/10mountiso
+#. /usr/share/max-genlive/hooks/20configurechroot
+#. /usr/share/max-genlive/hooks/59addmaxpackages
+#_exit 1
+
+#. /usr/share/max-genlive/hooks/10debootstrap
+#. /usr/share/max-genlive/hooks/20configurechroot
+#. /usr/share/max-genlive/hooks/30upgrade
+#. /usr/share/max-genlive/hooks/59zzinfantil
+#_exit 1
+
+if [ "$ONLY_NANO_CDROM" = "1" ]; then
+  . ${BASE}/usr/share/max-genlive/hooks/90umount
+  . ${BASE}/usr/share/max-genlive/hooks/75nanomax
+  . ${BASE}/usr/share/max-genlive/hooks/90umount
+  _exit "Fin de pruebas"
+fi
+
+if [ "$ONLY_ISO" = "1" ]; then
+#  . ${BASE}/usr/share/max-genlive/hooks/60clean
+  . ${BASE}/usr/share/max-genlive/hooks/80buildiso
+  . ${BASE}/usr/share/max-genlive/hooks/90umount
+  _exit "Fin ONLY_ISO"
+fi
+
+
+for hook in $HOOKS/*; do
+  #_echo "Cargando extension $hook"
+  [ -f $hook ] && . $hook || _exit "Error ejecutando $hook"
+done
+
+_echo "Terminado"
+
+exit 0

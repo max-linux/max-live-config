@@ -1,0 +1,161 @@
+# Install the MaX Ubuntu desktop.
+#
+#
+tasksel tasksel/first multiselect ubuntu-desktop
+debconf debconf/language string es
+d-i debian-installer/locale string es_ES
+d-i clock-setup/utc boolean false
+d-i time/zone string Europe/Madrid
+d-i clock-setup/utc boolean false
+#
+#
+#
+# Keyboard selection.
+d-i console-setup/modelcode string pc105
+d-i console-setup/layoutcode string es
+d-i console-setup/ask_detect boolean false
+d-i keyboard-configuration/layoutcode string es
+d-i keyboard-configuration/modelcode string pc105
+d-i keyboard-configuration/optionscode string
+d-i keyboard-configuration/variantcode string es
+d-i keyboard-configuration/variant select España
+#
+ubiquity keyboard-configuration/modelcode string pc105
+ubiquity keyboard-configuration/layoutcode string es
+ubiquity keyboard-configuration/optionscode string
+ubiquity keyboard-configuration/variantcode string es
+ubiquity keyboard-configuration/variant select España
+keyboard-configuration console-setup/ask_detect boolean false
+ubiquity console-setup/ask_detect boolean false
+#
+#
+# Ubiquity installer
+#
+ubiquity languagechooser/language-name-fb select Spanish
+ubiquity languagechooser/language-name select Spanish
+ubiquity countrychooser/shortlist select ES
+ubiquity countrychooser/countryname select Spain
+ubiquity countrychooser/country-name string Spain
+ubiquity console-keymaps-at/keymap select es
+ubiquity localechooser/supported-locales multiselect es_ES.UTF-8
+ubiquity localechooser/languagelist select es
+ubiquity tzconfig/gmt boolean false
+ubiquity time/zone select Europe/Madrid
+ubiquity debian-installer/locale select es_ES
+#
+ubiquity debian-installer/consoledisplay string console-setup
+ubiquity debian-installer/country string ES
+ubiquity debian-installer/locale select es_ES.UTF-8
+ubiquity localechooser/preferred-locale select es_ES.UTF-8
+ubiquity localechooser/shortlist select ES
+#
+#ubiquity ubiquity/stepLanguage boolean true
+#ubiquity ubiquity/stepLocation boolean true
+#ubiquity ubiquity/stepKeyboardConf	boolean true
+ubiquity ubiquity/stepMigrationAssistant boolean false
+#
+# Tipo de instalacion, puede ser:
+#  escritorio (lo que va en el DVD)
+#  alumno (instala max-alumno)
+#  profesor (instala max-profesor)
+#  servidor (instala max-servidor)
+#  terminales (instala max-servidor y max-netboot-server)
+#
+ubiquity ubiquity/max_install_type string escritorio
+#
+#
+#  Create user madrid
+passwd passwd/user-fullname string Madrid
+passwd passwd/username string madrid
+passwd passwd/user-password password cmadrid
+passwd passwd/user-password-again password cmadrid
+passwd passwd/user-default-groups string adm audio cdrom dialout floppy video dip lpadmin plugdev fuse scanner vboxusers sambashare
+passwd passwd/auto-login boolean false
+ubiquity user-setup/allow-password-weak boolean true
+#
+passwd passwd/alumno-userfullname string Alumno
+passwd passwd/alumno-username string alumno
+passwd passwd/alumno-password password alumno
+passwd passwd/alumno-default-groups string audio cdrom dialout floppy video plugdev scanner vboxusers sambashare
+
+ubiquity ubiquity/stepUserInfo boolean false
+#
+#d-i	passwd passwd/make-user boolean true
+#d-i	passwd/user-fullname string Dummy User
+#d-i	passwd/username string dummy
+#d-i	passwd/user-password-crypted password deleted
+#
+#
+#
+# xorg spanish keymap
+# (disabled, autodetect seems to work)
+#xserver-xorg xserver-xorg/config/inputdevice/keyboard/model string "pc105"
+#xserver-xorg xserver-xorg/config/inputdevice/keyboard/layout string "es"
+#
+# console locales
+#
+#console-setup	console-setup/layoutcode	select	es
+#console-setup	console-setup/modelcode	select	pc105
+#console-setup	console-setup/layout	select	Spain
+#console-setup	console-setup/variant	select	Spain
+console-setup	console-setup/variant	select	Spain
+console-setup	console-setup/unsupported_options	boolean	true
+console-setup	console-setup/ctrl_alt_bksp	boolean	false
+console-setup	console-setup/modelcode	string	pc105
+console-setup	console-setup/fontsize	string	16
+console-setup	console-setup/unsupported_layout	boolean	true
+console-setup	console-setup/layoutcode	string	es
+console-setup	console-setup/detect	detect-keyboard	
+console-setup	console-setup/codesetcode	string	Lat15
+console-setup	console-setup/dont_ask_layout	error	
+console-setup	console-setup/altgr	select	Right Alt
+console-setup	console-setup/ttys	string	/dev/tty[1-6]
+console-setup	console-setup/codeset	select	# Latin1 and Latin5 - western Europe and Turkic languages
+console-setup	console-setup/toggle	select	No toggling
+console-setup	console-setup/fontface	select	Fixed
+console-setup	console-setup/compose	select	No compose key
+console-setup	console-setup/fontsize-text	select	16
+console-setup	console-setup/ask_detect	boolean	false
+console-setup	console-setup/switch	select	No temporary switch
+console-setup	console-setup/unsupported_config_layout	boolean	true
+console-setup	console-setup/charmap	select	UTF-8
+console-setup	console-setup/optionscode	string	lv3:ralt_switch
+console-setup	console-setup/unsupported_config_options	boolean	true
+console-setup	console-setup/layout	select	Spain
+console-setup	console-setup/detected	note	
+console-setup	console-setup/variantcode	string	
+console-setup	console-setup/model	select	Generic 105-key (Intl) PC
+console-setup	console-setup/fontsize-fb	select	16
+#
+#
+# ATFTPD necesita configurase sin inetd
+#
+atftpd atftpd/use_inetd boolean false
+#
+#
+# SAMBA configuration
+samba samba/run_mode select daemons
+samba-common samba-common/encrypt_passwords boolean true
+samba-common samba-common/dhcp boolean false
+samba-common samba-common/workgroup string AULAMAX
+samba-common samba-common/do_debconf boolean true
+#
+# mscorefonts
+ttf-mscorefonts-installer	msttcorefonts/accepted-mscorefonts-eula	boolean	true
+ttf-mscorefonts-installer	msttcorefonts/present-mscorefonts-eula	note	
+#ttf-mscorefonts-installer	msttcorefonts/http_proxy	string	
+#ttf-mscorefonts-installer	msttcorefonts/error-mscorefonts-eula	error	
+#ttf-mscorefonts-installer	msttcorefonts/dlurl	string
+#ttf-mscorefonts-installer	msttcorefonts/savedir	string
+#ttf-mscorefonts-installer	msttcorefonts/baddldir	error
+#ttf-mscorefonts-installer	msttcorefonts/dldir	string	
+#
+# GRUB
+grub-pc grub-pc/timeout string 10
+grub-pc grub-pc/hidden_timeout boolean false
+#
+#
+#
+ubiquity ubiquity/use_nonfree boolean true
+ubiquity ubiquity/download_updates boolean false
+

@@ -29,14 +29,14 @@ if [ "$1" != "" ]; then
             sudo rm -f .build/binary*
             echo "-----------------------------------------------------" >> build.log
             echo " BUILD $(date +"%F_%T")" >> build.log
-            sudo lb build | tee -a build.log
+            sudo lb build 2>&1 | tee -a build.log
             ;;
 
         cleanbuild)
-            sudo lb clean
+            sudo lb clean --chroot --binary
             echo "-----------------------------------------------------" > build.log
             echo " BUILD $(date +"%F_%T")" >> build.log
-            sudo lb build | tee -a build.log
+            sudo lb build 2>&1 | tee -a build.log
             ;;
 
         purge)
@@ -47,7 +47,7 @@ if [ "$1" != "" ]; then
         build)
             echo "-----------------------------------------------------" >> build.log
             echo " BUILD $(date +"%F_%T")" >> build.log
-            sudo lb build | tee -a build.log
+            sudo lb build 2>&1 | tee -a build.log
             ;;
     esac
     exit

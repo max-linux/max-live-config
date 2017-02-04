@@ -1,0 +1,51 @@
+
+
+if [ ! $DISABLE_SQUASHFS ]; then
+
+  rm -f $CDRW/casper/filesystem.squashfs 
+
+  _revert_invoke
+
+  rm -f $CHROOT/root/.bash_history
+  rm -rf $CHROOT/home/*
+  rm -rf $CHROOT/var/lib/max/background-selected
+
+  NUMPROC="-processors $(grep -c ^processor /proc/cpuinfo)"
+  LZMA=""
+  # ver si hay que desactivar LZMA
+  chroot $CHROOT $MKSQUASHFS -help 2>&1 | grep -q nolzma && LZMA="-nolzma"
+
+  mkdir -p $CDRW/casper/
+  _echo "Creando archivo squashfs (tarda bastante)..."
+
+  # montar chroot dentro de chroot
+  mount -o bind $CDRW/   $CHROOT/media
+  mount -o bind $CHROOT/ $CHROOT/mnt
+
+  cat << EOF > $CHROOT/exclude.sq
+/media/
+/exclude.sq
+EOF
+
+  chroot $CHROOT $MKSQUASHFS /mnt/ /media/casper/filesystem.squashfs -ef /exclude.sq $LZMA $NUMPROC || _exit "No se ha podido generar el archivo squashfs"
+
+  umount $CHROOT/media
+  umount $CHROOT/mnt
+
+  rm -f $CHROOT/exclude.sq
+
+#  $MKSQUASHFS $CHROOT/  $CDRW/casper/filesystem.squashfs $LZMA || _exit "No se ha podido generar el archivo squashfs"
+
+  chmod 644 $CDRW/casper/filesystem.squashfs
+
+  _echo "Calculando tamaño filesystem.size..."
+
+  unsquashfs -lls $CDRW/casper/filesystem.squashfs | grep -v " inodes " | grep -v "unsquashfs:" | awk '{print $3}' | grep -v "," > /tmp/size.tmp
+  for i in `cat /tmp/size.tmp`; do a=$(($a+$i)); done
+  echo $a > $CDRW/casper/filesystem.size
+  rm /tmp/size.tmp
+
+fi
+
+
+
